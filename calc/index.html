@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Peptide Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #04080d;
+  --surf: #0b1520;
+  --border: #162030;
+  --border2: #1e304a;
+  --teal: #00e5c8;
+  --amber: #f5a623;
+  --text: #e2eaf4;
+  --muted: #4a6080;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(rgba(0,229,200,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,200,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.wrap { width: 100%; max-width: 480px; position: relative; z-index: 1; }
+
+/* Header */
+.hdr { text-align: center; margin-bottom: 36px; }
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.eyebrow::before, .eyebrow::after { content: ''; width: 30px; height: 1px; background: var(--teal); opacity: 0.4; }
+h1 { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: 0.04em; line-height: 0.9; }
+h1 em { color: var(--teal); font-style: normal; display: block; }
+
+/* Presets */
+.preset-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+.pill { padding: 5px 12px; border: 1px solid var(--border2); border-radius: 20px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); cursor: pointer; background: none; transition: all 0.15s; white-space: nowrap; }
+.pill:hover, .pill.active { border-color: var(--teal); color: var(--teal); background: rgba(0,229,200,0.06); }
+
+/* Fields */
+.fields { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.input-wrap { position: relative; }
+input, select {
+  width: 100%;
+  background: var(--surf);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  padding: 13px 60px 13px 18px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+select { padding-right: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+input:focus, select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,229,200,0.08); }
+.unit { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); pointer-events: none; }
+
+/* Button */
+.btn { width: 100%; padding: 17px; background: var(--teal); color: #000; border: none; border-radius: 10px; font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.15em; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; }
+.btn:hover { background: #00f5d8; box-shadow: 0 0 24px rgba(0,229,200,0.25); transform: translateY(-1px); }
+
+/* Result */
+.result { display: none; background: var(--surf); border: 1px solid var(--teal); border-radius: 14px; padding: 28px 24px; text-align: center; animation: up 0.35s ease; }
+.result.show { display: block; }
+@keyframes up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.result-lbl { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+.result-big { font-family: 'Bebas Neue', sans-serif; font-size: 80px; line-height: 1; color: var(--text); }
+.result-big small { font-size: 30px; color: var(--muted); font-family: 'DM Mono', monospace; font-weight: 300; }
+.result-desc { font-size: 13px; color: var(--muted); margin-top: 6px; margin-bottom: 24px; line-height: 1.6; }
+
+/* Syringe */
+.syringe-wrap { margin-bottom: 24px; }
+.syringe-lbl { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-align: left; margin-bottom: 8px; }
+.syringe { position: relative; height: 30px; background: rgba(255,255,255,0.04); border: 1px solid var(--border2); border-radius: 4px; overflow: hidden; }
+.syringe-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, #00b8a0, var(--teal)); border-radius: 3px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.syringe-fill::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 3px; background: rgba(255,255,255,0.5); }
+.ticks { display: flex; justify-content: space-between; margin-top: 4px; }
+.tick { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.stat { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 12px 8px; text-align: center; }
+.stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.stat-lbl { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+.disclaimer { margin-top: 24px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-align: center; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <div class="eyebrow">Precision Dosing</div>
+    <h1>Peptide<em>Calc</em></h1>
+  </div>
+
+  <div class="preset-label">Quick Select</div>
+  <div class="pills">
+    <button class="pill" onclick="preset('BPC-157',5,2,250)">BPC-157</button>
+    <button class="pill" onclick="preset('TB-500',5,2,500)">TB-500</button>
+    <button class="pill" onclick="preset('Ipamorelin',5,1,200)">Ipamorelin</button>
+    <button class="pill" onclick="preset('CJC-1295',2,1,100)">CJC-1295</button>
+    <button class="pill" onclick="preset('Tesamorelin',2,1,1000)">Tesamorelin</button>
+    <button class="pill" onclick="preset('Retatrutide',10,2,1000)">Retatrutide</button>
+    <button class="pill" onclick="preset('Semaglutide',3,1.5,250)">Semaglutide</button>
+    <button class="pill" onclick="preset('Tirzepatide',5,1,500)">Tirzepatide</button>
+    <button class="pill" onclick="preset('PT-141',10,2,1750)">PT-141</button>
+    <button class="pill" onclick="preset('MOTS-c',10,2,5000)">MOTS-c</button>
+    <button class="pill" onclick="preset('GHK-Cu',50,2,1000)">GHK-Cu</button>
+    <button class="pill" onclick="preset('HGH',10,2,1000)">HGH</button>
+  </div>
+
+  <div class="fields">
+    <div class="field">
+      <div class="field-label">Vial Size</div>
+      <div class="input-wrap">
+        <input type="number" id="vial" value="5" min="0.1" step="0.1" placeholder="e.g. 2, 5, 10">
+        <div class="unit">mg</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">BAC Water Added</div>
+      <div class="input-wrap">
+        <input type="number" id="bac" value="2" min="0.1" step="0.1">
+        <div class="unit">mL</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">Your Dose</div>
+      <div class="input-wrap">
+        <input type="number" id="dose" value="250" min="1" step="1">
+        <div class="unit">mcg</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">Syringe Size</div>
+      <select id="syringe">
+        <option value="0.3">0.3 mL — 30 unit syringe</option>
+        <option value="0.5" selected>0.5 mL — 50 unit syringe (Terumo U-100)</option>
+        <option value="1.0">1.0 mL — 100 unit syringe (Terumo U-100)</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="field-label">Injection Frequency</div>
+      <select id="freq">
+        <option value="7">Once a week</option>
+        <option value="3.5">Twice a week</option>
+        <option value="2.33">3x per week</option>
+        <option value="1" selected>Once daily</option>
+        <option value="0.5">Twice daily</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn" onclick="calc()">Calculate →</button>
+
+  <div class="result" id="result">
+    <div class="result-lbl">Draw to this mark</div>
+    <div class="result-big" id="rUnits">—<small> units</small></div>
+    <div class="result-desc" id="rDesc">—</div>
+
+    <div class="syringe-wrap">
+      <div class="syringe-lbl" id="syrLbl">Syringe Fill</div>
+      <div class="syringe">
+        <div class="syringe-fill" id="fill" style="width:0%"></div>
+      </div>
+      <div class="ticks" id="ticks"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val" id="sMcgUnit">—</div>
+        <div class="stat-lbl">mcg / unit</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="sDoses">—</div>
+        <div class="stat-lbl">doses / vial</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="sDays">—</div>
+        <div class="stat-lbl">supply</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">For educational purposes only. Always verify with your prescribing physician.</div>
+</div>
+
+<script>
+function preset(name, vMg, bMl, dMcg) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p.textContent === name));
+  document.getElementById('vial').value = vMg;
+  document.getElementById('bac').value = bMl;
+  document.getElementById('dose').value = dMcg;
+}
+
+function calc() {
+  const vMg   = parseFloat(document.getElementById('vial').value);
+  const bMl   = parseFloat(document.getElementById('bac').value);
+  const dMcg  = parseFloat(document.getElementById('dose').value);
+  const syrMl = parseFloat(document.getElementById('syringe').value);
+
+  if (!vMg || !bMl || !dMcg) { alert('Please fill all fields.'); return; }
+
+  const vMcg       = vMg * 1000;
+  const concPerMl  = vMcg / bMl;
+  const mlNeeded   = dMcg / concPerMl;
+  const totalUnits = Math.round(100 / syrMl);  // units on this syringe
+  const units      = mlNeeded * totalUnits;
+  const mcgPerUnit = dMcg / units;
+  const doses      = Math.floor(vMcg / dMcg);
+  const freq       = parseFloat(document.getElementById('freq').value);
+  const days       = Math.floor(doses * freq);
+  const weeks      = Math.floor(days / 7);
+  const pct        = Math.min((units / totalUnits) * 100, 100);
+
+  document.getElementById('rUnits').innerHTML = units.toFixed(1) + '<small> units</small>';
+  document.getElementById('rDesc').textContent =
+    'Draw to the ' + units.toFixed(1) + ' unit mark on your ' + syrMl + 'mL syringe to get ' + dMcg + 'mcg';
+  document.getElementById('fill').style.width = pct + '%';
+  document.getElementById('syrLbl').textContent =
+    'Syringe Fill — ' + syrMl + 'mL (' + totalUnits + ' unit) syringe';
+  document.getElementById('sMcgUnit').textContent = mcgPerUnit.toFixed(2);
+  document.getElementById('sDoses').textContent = doses;
+  document.getElementById('sDays').textContent = weeks > 0 ? weeks + 'w' : days + 'd';
+
+  // Tick marks
+  const ticks = document.getElementById('ticks');
+  ticks.innerHTML = '';
+  const steps = syrMl === 0.3 ? [0,5,10,15,20,25,30] : syrMl === 0.5 ? [0,10,20,30,40,50] : [0,10,20,30,40,50,60,70,80,90,100];
+  steps.forEach(v => {
+    const t = document.createElement('span');
+    t.className = 'tick';
+    t.textContent = v;
+    ticks.appendChild(t);
+  });
+
+  const r = document.getElementById('result');
+  r.classList.add('show');
+  setTimeout(() => r.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') calc(); });
+</script>
+</body>
+</html>
