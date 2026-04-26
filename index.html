@@ -3,405 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Hans — Peptide Panel</title>
+<title>Peptide Panel — Expert Research Advisors</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #080c10;
-  --surf: #0e1318;
-  --surf2: #141b22;
-  --b1: #1e2832;
-  --b2: #263040;
-  --teal: #00d4b8;
-  --teal2: #00a896;
-  --tglow: rgba(0,212,184,0.10);
-  --amber: #f5a623;
-  --red: #ff5a5a;
-  --green: #3dd68c;
-  --text: #e8edf2;
-  --muted: #5a6a7a;
-  --muted2: #3a4a5a;
+  --bg: #080c10;--surf: #0b1520;--surf2: #141b22;--b1: #1e2832;--b2: #263040;
+  --teal: #00d4b8;--teal2: #00a896;--tglow: rgba(0,212,184,0.10);
+  --amber: #f5a623;--red: #ff5a5a;--green: #3dd68c;
+  --text: #e8edf2;--muted: #5a6a7a;--muted2: #3a4a5a;
 }
-
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Syne', sans-serif;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
-  width: 100vw;
-  overflow: hidden;
-}
+html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;width:100vw;overflow:hidden;}
 
 /* HEADER */
-.hdr {
-  flex-shrink: 0;
-  background: var(--surf);
-  border-bottom: 1px solid var(--b1);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-.hdr-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--text); }
-.hdr-logo em { font-style: italic; color: var(--teal); }
-.hdr-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.hdr-stat { text-align: right; }
-.hdr-val { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--green); }
-.hdr-val.t { color: var(--teal); }
-.hdr-lbl { font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.hdr-dot { display: flex; align-items: center; gap: 5px; font-size: 9px; color: var(--muted); }
-.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px var(--teal); animation: pulse 2s ease infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hdr{flex-shrink:0;background:var(--surf);border-bottom:1px solid var(--b1);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.hdr-logo{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text);}
+.hdr-logo em{font-style:italic;color:var(--teal);}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.hdr-dot{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.calc-link{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--teal);border:1px solid var(--teal);padding:5px 10px;border-radius:4px;text-decoration:none;opacity:0.8;}
 
 /* TABS */
-.tabs {
-  flex-shrink: 0;
-  display: flex;
-  background: var(--surf);
-  border-bottom: 1px solid var(--b1);
-}
-.tab {
-  flex: 1;
-  padding: 10px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  text-align: center;
-  transition: all 0.2s;
-}
-.tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.tabs{flex-shrink:0;display:flex;background:var(--surf);border-bottom:1px solid var(--b1);}
+.tab{flex:1;padding:10px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;text-align:center;transition:all 0.2s;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
 
-/* BODY AREA */
-.body {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-  min-height: 0;
-}
+/* BODY */
+.body{flex:1;display:flex;overflow:hidden;min-height:0;}
 
 /* SIDEBAR */
-.sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--b1);
-  background: var(--surf);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-.sb-sec { padding: 8px 12px; font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--b1); background: var(--surf); }
-.p-card { padding: 10px 12px; border-bottom: 1px solid var(--b1); background: var(--surf2); }
-.p-name { font-size: 11px; font-weight: 700; color: var(--teal); margin-bottom: 6px; }
-.p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-.ps { background: var(--bg); border: 1px solid var(--b1); padding: 5px 7px; border-radius: 3px; }
-.ps-v { font-family: 'DM Mono', monospace; font-size: 11px; }
-.ps-v.g { color: var(--green); }
-.ps-v.w { color: var(--amber); }
-.ps-l { font-size: 7px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1px; }
-.pills { padding: 8px 12px; border-bottom: 1px solid var(--b1); display: flex; flex-wrap: wrap; gap: 4px; }
-.pill { font-size: 8px; font-weight: 600; letter-spacing: 0.06em; padding: 2px 6px; border-radius: 2px; border: 1px solid var(--b2); color: var(--muted); text-transform: uppercase; }
-.pill.hi { border-color: var(--teal2); color: var(--teal); background: var(--tglow); }
-.ag { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--b1); }
-.ag.on { background: rgba(245,166,35,0.08); }
-.ag-av { width: 28px; height: 28px; border: 1px solid var(--b2); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: var(--teal); background: var(--surf2); font-family: 'DM Mono', monospace; flex-shrink: 0; }
-.ag.on .ag-av { border-color: var(--amber); color: var(--amber); }
-.ag-n { font-size: 10px; font-weight: 600; color: var(--text); }
-.ag-s { font-size: 8px; color: var(--muted); margin-top: 1px; }
+.sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--b1);background:var(--surf);overflow-y:auto;display:flex;flex-direction:column;}
+.sb-sec{padding:8px 12px;font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);background:var(--surf);}
+
+/* Blood input form in sidebar */
+.blood-form{padding:12px;border-bottom:1px solid var(--b1);}
+.bf-title{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.bf-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.bf-field{display:flex;flex-direction:column;gap:3px;}
+.bf-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.bf-input{background:var(--bg);border:1px solid var(--b2);border-radius:4px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:5px 7px;outline:none;width:100%;transition:border-color 0.2s;}
+.bf-input:focus{border-color:var(--teal);}
+.bf-input::placeholder{color:var(--muted2);}
+.bf-btn{width:100%;padding:7px;background:var(--teal);color:#000;border:none;border-radius:4px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
+.bf-btn:hover{background:#00f0d0;}
+.bf-saved{font-size:9px;color:var(--green);text-align:center;margin-top:6px;display:none;}
+
+/* Pills */
+.pills-sec{padding:8px 12px;border-bottom:1px solid var(--b1);}
+.pill{display:inline-block;font-size:8px;font-weight:600;letter-spacing:0.06em;padding:2px 7px;border-radius:2px;border:1px solid var(--b2);color:var(--muted);text-transform:uppercase;margin:2px 2px 2px 0;}
+
+/* Agents */
+.ag{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1);}
+.ag.on{background:rgba(245,166,35,0.08);}
+.ag-av{width:28px;height:28px;border:1px solid var(--b2);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--teal);background:var(--surf2);font-family:'DM Mono',monospace;flex-shrink:0;}
+.ag.on .ag-av{border-color:var(--amber);color:var(--amber);}
+.ag-n{font-size:10px;font-weight:600;color:var(--text);}
+.ag-s{font-size:8px;color:var(--muted);margin-top:1px;}
 
 /* PANEL VIEW */
-.panel-view, .weight-view {
-  display: none;
-  flex: 1;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
-  min-width: 0;
-}
-.panel-view.active, .weight-view.active { display: flex; }
-
-.msgs {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 0;
-}
+.panel-view,.weight-view{display:none;flex:1;flex-direction:column;overflow:hidden;min-height:0;min-width:0;}
+.panel-view.active,.weight-view.active{display:flex;}
+.msgs{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:0;}
 
 /* WELCOME */
-.welcome { text-align: center; padding: 30px 16px; max-width: 500px; margin: auto; }
-.welcome h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 10px; }
-.welcome h2 em { font-style: italic; color: var(--teal); }
-.welcome p { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
-.eqs { display: flex; flex-direction: column; gap: 6px; }
-.eq { padding: 10px 14px; border: 1px solid var(--b2); border-radius: 4px; font-size: 12px; color: var(--muted); cursor: pointer; background: var(--surf); line-height: 1.5; text-align: left; transition: all 0.2s; }
-.eq:hover { border-color: var(--teal); color: var(--text); background: var(--tglow); }
+.welcome{text-align:center;padding:30px 16px;max-width:520px;margin:auto;}
+.welcome h2{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);margin-bottom:10px;}
+.welcome h2 em{font-style:italic;color:var(--teal);}
+.welcome p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.eqs{display:flex;flex-direction:column;gap:6px;}
+.eq{padding:10px 14px;border:1px solid var(--b2);border-radius:4px;font-size:12px;color:var(--muted);cursor:pointer;background:var(--surf);line-height:1.5;text-align:left;transition:all 0.2s;}
+.eq:hover{border-color:var(--teal);color:var(--text);background:var(--tglow);}
 
 /* MESSAGES */
-.u-msg { display: flex; justify-content: flex-end; }
-.u-bubble { background: var(--teal); color: #000; padding: 10px 14px; border-radius: 12px 12px 2px 12px; max-width: 80%; font-size: 13px; font-weight: 500; line-height: 1.5; word-break: break-word; }
-.panel-lbl { font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.u-msg{display:flex;justify-content:flex-end;}
+.u-bubble{background:var(--teal);color:#000;padding:10px 14px;border-radius:12px 12px 2px 12px;max-width:80%;font-size:13px;font-weight:500;line-height:1.5;word-break:break-word;}
+.panel-lbl{font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
 
-/* RESPONSE CARDS */
-.rcard { background: var(--surf); border: 1px solid var(--b1); border-radius: 8px; overflow: hidden; margin-bottom: 6px; }
-.rcard.open { border-color: var(--teal); }
-.rcard-hdr { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; cursor: pointer; gap: 8px; }
-.rcard-hdr:hover { background: var(--surf2); }
-.rcard-left { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
-.rcard-av { width: 30px; height: 30px; border: 1px solid var(--b2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: var(--teal); background: var(--bg); font-family: 'DM Mono', monospace; flex-shrink: 0; }
-.rcard-name { font-size: 12px; font-weight: 700; color: var(--teal); }
-.rcard-spec { font-size: 9px; color: var(--muted); }
-.rcard-preview { font-size: 11px; color: var(--muted); max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
-.rcard-chev { color: var(--teal); font-size: 18px; font-weight: 300; transition: transform 0.2s; flex-shrink: 0; line-height: 1; }
-.rcard-body { padding: 14px; border-top: 1px solid var(--b1); display: none; }
-.rcard-body p { font-size: 15px; line-height: 1.75; color: var(--text); margin-bottom: 14px; }
-.rcard-rec-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
-.rcard-bullet { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
-.rcard-bullet span:first-child { color: var(--teal); font-size: 16px; flex-shrink: 0; line-height: 1.5; }
-.rcard-bullet span:last-child { font-size: 14px; line-height: 1.65; color: #c8d4e0; }
-.dots { display: inline-flex; gap: 4px; align-items: center; }
-.dots span { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); animation: dot 1.2s ease infinite; }
-.dots span:nth-child(2) { animation-delay: 0.2s; }
-.dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dot { 0%,80%,100%{transform:scale(0.7);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+/* CARDS */
+.rcard{background:var(--surf);border:1px solid var(--b1);border-radius:8px;overflow:hidden;margin-bottom:6px;}
+.rcard.open{border-color:var(--teal);}
+.rcard-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;gap:8px;}
+.rcard-hdr:hover{background:var(--surf2);}
+.rcard-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
+.rcard-av{width:30px;height:30px;border:1px solid var(--b2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--teal);background:var(--bg);font-family:'DM Mono',monospace;flex-shrink:0;}
+.rcard-name{font-size:12px;font-weight:700;color:var(--teal);}
+.rcard-spec{font-size:9px;color:var(--muted);}
+.rcard-preview{font-size:11px;color:var(--muted);max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;}
+.rcard-chev{color:var(--teal);font-size:18px;font-weight:300;transition:transform 0.2s;flex-shrink:0;line-height:1;}
+.rcard-body{padding:14px;border-top:1px solid var(--b1);display:none;}
+.rcard-body p{font-size:15px;line-height:1.75;color:var(--text);margin-bottom:14px;}
+.rcard-rec-lbl{font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.rcard-bullet{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.rcard-bullet span:first-child{color:var(--teal);font-size:16px;flex-shrink:0;line-height:1.5;}
+.rcard-bullet span:last-child{font-size:14px;line-height:1.65;color:#c8d4e0;}
+.dots{display:inline-flex;gap:4px;align-items:center;}
+.dots span{width:4px;height:4px;border-radius:50%;background:var(--muted);animation:dot 1.2s ease infinite;}
+.dots span:nth-child(2){animation-delay:0.2s;}.dots span:nth-child(3){animation-delay:0.4s;}
+@keyframes dot{0%,80%,100%{transform:scale(0.7);opacity:0.4}40%{transform:scale(1);opacity:1}}
 
-/* BOTTOM BAR */
-.bottom {
-  flex-shrink: 0;
-  background: var(--surf);
-  border-top: 1px solid var(--b1);
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-.photo-row {
-  display: none;
-  gap: 6px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.photo-row.has-photos { display: flex; }
-.p-thumb { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
-.p-thumb img { width: 44px; height: 44px; object-fit: cover; border-radius: 4px; border: 1px solid var(--b2); display: block; }
-.p-thumb-del { position: absolute; top: -4px; right: -4px; width: 16px; height: 16px; border-radius: 50%; background: var(--red); border: none; color: #fff; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
-.input-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  width: 100%;
-}
-.cam-btn {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--b2);
-  border-radius: 8px;
-  background: var(--bg);
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#qi {
-  flex: 1;
-  min-width: 0;
-  background: var(--bg);
-  border: 1px solid var(--b2);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'Syne', sans-serif;
-  font-size: 15px;
-  padding: 10px 12px;
-  resize: none;
-  height: 44px;
-  max-height: 120px;
-  outline: none;
-  line-height: 1.4;
-}
-#qi:focus { border-color: var(--teal); }
-#qi::placeholder { color: var(--muted2); }
-.send {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: var(--teal);
-  color: #000;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.send:disabled { background: var(--b2); color: var(--muted); cursor: not-allowed; }
+/* BOTTOM */
+.bottom{flex-shrink:0;background:var(--surf);border-top:1px solid var(--b1);padding:10px 12px;display:flex;flex-direction:column;gap:8px;width:100%;}
+.photo-row{display:none;gap:6px;flex-wrap:wrap;align-items:center;}
+.photo-row.has-photos{display:flex;}
+.p-thumb{position:relative;width:44px;height:44px;flex-shrink:0;}
+.p-thumb img{width:44px;height:44px;object-fit:cover;border-radius:4px;border:1px solid var(--b2);display:block;}
+.p-thumb-del{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.input-row{display:flex;align-items:flex-end;gap:8px;width:100%;}
+.cam-btn{flex-shrink:0;width:44px;height:44px;border:1px solid var(--b2);border-radius:8px;background:var(--bg);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+#qi{flex:1;min-width:0;background:var(--bg);border:1px solid var(--b2);border-radius:8px;color:var(--text);font-family:'Syne',sans-serif;font-size:15px;padding:10px 12px;resize:none;height:44px;max-height:120px;outline:none;line-height:1.4;}
+#qi:focus{border-color:var(--teal);}
+#qi::placeholder{color:var(--muted2);}
+.send{flex-shrink:0;width:44px;height:44px;border:none;background:var(--teal);color:#000;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.send:disabled{background:var(--b2);color:var(--muted);cursor:not-allowed;}
+
+/* API KEY BANNER */
+.api-banner{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:6px;padding:10px 14px;margin:12px 12px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.api-banner-text{font-size:11px;color:var(--amber);flex:1;line-height:1.5;}
+.api-banner-btn{background:var(--amber);color:#000;border:none;border-radius:4px;padding:6px 12px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.api-input-row{display:flex;gap:8px;align-items:center;margin:0 12px 10px;flex-shrink:0;}
+.api-input-row input{flex:1;background:var(--bg);border:1px solid var(--b2);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:8px 12px;outline:none;}
+.api-input-row input:focus{border-color:var(--amber);}
+.api-submit{background:var(--amber);color:#000;border:none;border-radius:6px;padding:8px 14px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
 
 /* WEIGHT VIEW */
-.wt-scroll { flex: 1; overflow-y: auto; padding: 16px; min-height: 0; height: 100%; }
-.wt-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-.ws { background: var(--surf); border: 1px solid var(--b1); border-radius: 6px; padding: 12px; }
-.ws-v { font-family: 'DM Mono', monospace; font-size: 20px; }
-.ws-v.g { color: var(--green); }
-.ws-v.t { color: var(--teal); }
-.ws-l { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
-.ws-s { font-size: 10px; color: var(--muted2); margin-top: 2px; }
-.chart-wrap { background: var(--surf); border: 1px solid var(--b1); border-radius: 6px; padding: 14px; margin-bottom: 16px; }
-.chart-ttl { font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-.add-wrap { background: var(--surf); border: 1px solid var(--b1); border-radius: 6px; padding: 14px; margin-bottom: 16px; }
-.add-ttl { font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.add-form { display: flex; gap: 8px; flex-wrap: wrap; }
-.kg-inp { display: flex; align-items: center; gap: 6px; background: var(--bg); border: 1px solid var(--b2); border-radius: 6px; padding: 8px 10px; flex: 1; min-width: 100px; }
-.kg-inp input { background: none; border: none; outline: none; color: var(--text); font-family: 'DM Mono', monospace; font-size: 16px; width: 70px; }
-.kg-inp .u { font-size: 11px; color: var(--muted); }
-.d-inp { background: var(--bg); border: 1px solid var(--b2); border-radius: 6px; padding: 9px 10px; color: var(--text); font-family: 'Syne', sans-serif; font-size: 12px; outline: none; flex: 1; min-width: 120px; }
-.ph-sel { background: var(--bg); border: 1px solid var(--b2); border-radius: 6px; padding: 9px 10px; color: var(--text); font-family: 'Syne', sans-serif; font-size: 12px; outline: none; }
-.add-btn { background: var(--teal); color: #000; border: none; border-radius: 6px; padding: 10px 16px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
-.log-wrap { background: var(--surf); border: 1px solid var(--b1); border-radius: 6px; overflow: hidden; }
-.log-hdr { display: grid; grid-template-columns: 1fr 80px 70px; gap: 8px; padding: 8px 12px; font-size: 8px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--b1); }
-.log-row { display: grid; grid-template-columns: 1fr 80px 70px; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--b1); align-items: center; transition: background 0.15s; }
-.log-row:last-child { border-bottom: none; }
-.log-row:hover { background: var(--surf2); }
-.log-d { font-size: 11px; color: var(--muted); }
-.log-k { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); }
-.log-c { font-size: 11px; }
-.log-c.neg { color: var(--green); }
-.log-c.pos { color: var(--red); }
-.log-c.z { color: var(--muted); }
+.wt-scroll{flex:1;overflow-y:auto;padding:16px;min-height:0;height:100%;}
+.wt-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.ws{background:var(--surf);border:1px solid var(--b1);border-radius:6px;padding:12px;}
+.ws-v{font-family:'DM Mono',monospace;font-size:20px;}
+.ws-v.g{color:var(--green);}.ws-v.t{color:var(--teal);}
+.ws-l{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;}
+.ws-s{font-size:10px;color:var(--muted2);margin-top:2px;}
+.chart-wrap{background:var(--surf);border:1px solid var(--b1);border-radius:6px;padding:14px;margin-bottom:16px;}
+.chart-ttl{font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.add-wrap{background:var(--surf);border:1px solid var(--b1);border-radius:6px;padding:14px;margin-bottom:16px;}
+.add-ttl{font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.add-form{display:flex;gap:8px;flex-wrap:wrap;}
+.kg-inp{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:8px 10px;flex:1;min-width:100px;}
+.kg-inp input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:16px;width:70px;}
+.kg-inp .u{font-size:11px;color:var(--muted);}
+.d-inp,.ph-sel{background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:9px 10px;color:var(--text);font-family:'Syne',sans-serif;font-size:12px;outline:none;}
+.add-btn{background:var(--teal);color:#000;border:none;border-radius:6px;padding:10px 16px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.log-wrap{background:var(--surf);border:1px solid var(--b1);border-radius:6px;overflow:hidden;}
+.log-hdr{display:grid;grid-template-columns:1fr 80px 70px;gap:8px;padding:8px 12px;font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);}
+.log-row{display:grid;grid-template-columns:1fr 80px 70px;gap:8px;padding:10px 12px;border-bottom:1px solid var(--b1);align-items:center;transition:background 0.15s;}
+.log-row:last-child{border-bottom:none;}
+.log-row:hover{background:var(--surf2);}
+.log-d{font-size:11px;color:var(--muted);}
+.log-k{font-family:'DM Mono',monospace;font-size:13px;color:var(--text);}
+.log-c{font-size:11px;}
+.log-c.neg{color:var(--green);}.log-c.pos{color:var(--red);}.log-c.z{color:var(--muted);}
 
-/* DESKTOP SIDEBAR */
-@media (max-width: 680px) {
-  .sidebar { display: none; }
-  .p-card-mobile { display: block; }
-}
-@media (min-width: 681px) {
-  .p-card-mobile { display: none; }
-}
-
-/* MOBILE PATIENT CARD (shows when sidebar hidden) */
-.p-card-mobile {
-  flex-shrink: 0;
-  background: var(--surf2);
-  border-bottom: 1px solid var(--b1);
-  padding: 8px 12px;
-}
-.p-card-mobile .p-grid { grid-template-columns: repeat(4, 1fr); gap: 4px; }
-
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--b2); border-radius: 2px; }
+@media(max-width:680px){.sidebar{display:none;}}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px;}
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- HEADER -->
   <div class="hdr">
     <div class="hdr-logo"><em>Peptide</em> Panel</div>
     <div class="hdr-right">
-      <div class="hdr-stat">
-        <div class="hdr-val" id="hdr-lost">−13.4 kg</div>
-        <div class="hdr-lbl">lost</div>
-      </div>
-      <div class="hdr-stat">
-        <div class="hdr-val t" id="hdr-cur">113.1 kg</div>
-        <div class="hdr-lbl">current</div>
-      </div>
-      <a href="/calc" style="font-family:DM Mono,monospace;font-size:10px;letter-spacing:0.1em;color:#00e5c8;border:1px solid #00e5c8;padding:5px 12px;border-radius:4px;text-decoration:none;opacity:0.7;">⊞ Calc</a><div class="hdr-dot"><div class="dot"></div>Live</div>
+      <a href="/calc" class="calc-link">⊞ Calculator</a>
+      <div class="hdr-dot"><div class="dot"></div>12 Specialists</div>
     </div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
     <div class="tab active" id="tab-p" onclick="switchTab('panel')">💬 Panel</div>
     <div class="tab" id="tab-w" onclick="switchTab('weight')">⚖️ Weight</div>
   </div>
 
-  <!-- MOBILE PATIENT CARD -->
-  <div class="p-card-mobile">
-    <div class="p-grid">
-      <div class="ps"><div class="ps-v g">5.0%</div><div class="ps-l">HbA1c ↓</div></div>
-      <div class="ps"><div class="ps-v w">21.9</div><div class="ps-l">HCY ↑</div></div>
-      <div class="ps"><div class="ps-v w">58</div><div class="ps-l">eGFR</div></div>
-      <div class="ps"><div class="ps-v g">1.2</div><div class="ps-l">TG mmol/L</div></div>
-    </div>
-  </div>
-
-  <!-- BODY -->
   <div class="body">
-
-    <!-- SIDEBAR (desktop only) -->
     <div class="sidebar">
-      <div class="sb-sec">Patient Profile</div>
-      <div class="p-card">
-        <div class="p-name">Hans H. · 63 yrs · Brisbane</div>
-        <div class="p-grid">
-          <div class="ps"><div class="ps-v g">5.0%</div><div class="ps-l">HbA1c ↓</div></div>
-          <div class="ps"><div class="ps-v g">3.97</div><div class="ps-l">LDL</div></div>
-          <div class="ps"><div class="ps-v w">21.9</div><div class="ps-l">HCY ↑</div></div>
-          <div class="ps"><div class="ps-v w">58</div><div class="ps-l">eGFR</div></div>
-          <div class="ps"><div class="ps-v g">24</div><div class="ps-l">IGF-1</div></div>
-          <div class="ps"><div class="ps-v g">19</div><div class="ps-l">ALT ↓</div></div>
-          <div class="ps"><div class="ps-v g">1.2</div><div class="ps-l">TG</div></div>
-          <div class="ps"><div class="ps-v g">80</div><div class="ps-l">Vit D</div></div>
+      <div class="sb-sec">Your Blood Results <span style="color:var(--teal);font-size:7px;">(optional)</span></div>
+      <div class="blood-form">
+        <div class="bf-title">Enter your results for personalised responses</div>
+        <div class="bf-grid">
+          <div class="bf-field"><div class="bf-label">HbA1c %</div><input class="bf-input" id="b-hba1c" placeholder="e.g. 5.5"></div>
+          <div class="bf-field"><div class="bf-label">LDL mmol/L</div><input class="bf-input" id="b-ldl" placeholder="e.g. 3.5"></div>
+          <div class="bf-field"><div class="bf-label">Homocysteine</div><input class="bf-input" id="b-hcy" placeholder="e.g. 12"></div>
+          <div class="bf-field"><div class="bf-label">eGFR</div><input class="bf-input" id="b-egfr" placeholder="e.g. 75"></div>
+          <div class="bf-field"><div class="bf-label">Triglycerides</div><input class="bf-input" id="b-tg" placeholder="e.g. 1.5"></div>
+          <div class="bf-field"><div class="bf-label">IGF-1</div><input class="bf-input" id="b-igf" placeholder="e.g. 22"></div>
+          <div class="bf-field"><div class="bf-label">Vit D</div><input class="bf-input" id="b-vitd" placeholder="e.g. 70"></div>
+          <div class="bf-field"><div class="bf-label">ALT U/L</div><input class="bf-input" id="b-alt" placeholder="e.g. 25"></div>
         </div>
+        <div class="bf-field" style="margin-bottom:8px;">
+          <div class="bf-label">Your Peptide Stack</div>
+          <input class="bf-input" id="b-stack" placeholder="e.g. BPC-157, Ipamorelin, CJC-1295">
+        </div>
+        <button class="bf-btn" onclick="saveBloodResults()">Save Results</button>
+        <div class="bf-saved" id="bf-saved">✓ Saved — specialists will reference your data</div>
       </div>
-      <div class="pills">
-        <span class="pill">Retatrutide</span><span class="pill">Tesamorelin</span>
-        <span class="pill">Ipamorelin</span><span class="pill">HGH</span>
-        <span class="pill">BPC-157</span><span class="pill">TB-500</span>
-        <span class="pill">MOTS-c</span><span class="pill">5-Amino-1MQ</span>
-        <span class="pill">GHK-Cu</span><span class="pill">LIPO-C+B12</span>
-      </div>
-      <div class="sb-sec" style="position:relative;top:auto">Agents</div>
+
+      <div class="sb-sec" style="position:relative;top:auto">Research Panel</div>
       <div id="agList"></div>
     </div>
 
     <!-- PANEL VIEW -->
     <div class="panel-view active" id="panelView">
+      <div id="apiBanner" class="api-banner">
+        <div class="api-banner-text">Enter your Anthropic API key to activate the panel. <a href="https://console.anthropic.com" target="_blank" style="color:var(--amber);">Get one free →</a></div>
+        <button class="api-banner-btn" onclick="showApiInput()">Add Key</button>
+      </div>
+      <div id="apiInputRow" class="api-input-row" style="display:none;">
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-...">
+        <button class="api-submit" onclick="saveApiKey()">Save</button>
+      </div>
+
       <div class="msgs" id="msgs">
         <div id="welcome" class="welcome">
-          <h2>Your Results,<br><em>Expert Eyes</em></h2>
-          <p>12 specialists have your full blood work, peptide stack, and weight data. Tap a question or type your own.</p>
+          <h2>Ask the<br><em>Expert Panel</em></h2>
+          <p>12 peptide researchers and medical specialists ready to answer your questions. Optionally enter your blood results in the sidebar for personalised responses.</p>
           <div class="eqs">
-            <div class="eq" onclick="useQ(this)">Analyse my full blood panel — what concerns you most and what impressed you most?</div>
-            <div class="eq" onclick="useQ(this)">My eGFR is 58 and homocysteine is 21.9 — what should I do specifically?</div>
-            <div class="eq" onclick="useQ(this)">I stopped peptides end of March and weight has plateaued at 113kg. Should I restart Retatrutide?</div>
-            <div class="eq" onclick="useQ(this)">Was Tesamorelin + Ipamorelin + HGH together appropriate for a 63-year-old?</div>
-            <div class="eq" onclick="useQ(this)">What should my next 3-month protocol look like based on these results?</div>
+            <div class="eq" onclick="useQ(this)">What is the best peptide protocol for fat loss and muscle preservation?</div>
+            <div class="eq" onclick="useQ(this)">How do I reconstitute BPC-157 and what dose should I use for gut healing?</div>
+            <div class="eq" onclick="useQ(this)">What are the differences between Ipamorelin, CJC-1295 and Tesamorelin?</div>
+            <div class="eq" onclick="useQ(this)">Is it safe to run multiple peptides at the same time?</div>
+            <div class="eq" onclick="useQ(this)">What peptides are most evidence-based for longevity and anti-ageing?</div>
           </div>
         </div>
       </div>
 
-      <!-- BOTTOM BAR -->
       <div class="bottom">
         <div class="photo-row" id="photoRow"></div>
         <div class="input-row">
           <button class="cam-btn" onclick="document.getElementById('fi').click()" title="Add photo">📷</button>
           <input type="file" id="fi" accept="image/*" multiple style="display:none" onchange="addPhotos(event)">
-          <textarea id="qi" placeholder="Ask the panel…"></textarea>
-          <button class="send" id="sb" onclick="send()">↑</button>
+          <textarea id="qi" placeholder="Ask the panel anything about peptides…"></textarea>
+          <button class="send" id="sb" onclick="sendMsg()">↑</button>
         </div>
       </div>
     </div>
@@ -409,77 +241,101 @@ html, body {
     <!-- WEIGHT VIEW -->
     <div class="weight-view" id="weightView">
       <div class="wt-scroll">
-        <div class="wt-stats">
-          <div class="ws"><div class="ws-v">126.5 kg</div><div class="ws-l">Start</div><div class="ws-s">8 Dec 2025</div></div>
-          <div class="ws"><div class="ws-v t" id="wv-cur">113.1 kg</div><div class="ws-l">Current</div><div class="ws-s" id="wv-date">20 Apr</div></div>
-          <div class="ws"><div class="ws-v g" id="wv-lost">−13.4 kg</div><div class="ws-l">Total lost</div><div class="ws-s" id="wv-wks">20 weeks</div></div>
-          <div class="ws"><div class="ws-v" id="wv-rate">0.67 kg</div><div class="ws-l">Avg/week</div></div>
+        <div style="padding:20px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7;">
+          <div style="font-size:32px;margin-bottom:12px;">⚖️</div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:8px;">Weight Tracker</div>
+          Log your weekly weigh-ins and track your peptide protocol progress over time.
         </div>
-        <div class="chart-wrap">
-          <div class="chart-ttl">Weight Journey — Dec 2025 to Present</div>
-          <canvas id="wc" height="160"></canvas>
-        </div>
-        <div class="add-wrap">
-          <div class="add-ttl">Log Weight</div>
-          <div class="add-form">
-            <div class="kg-inp"><input type="number" id="nkg" placeholder="113.0" step="0.1" min="80" max="200"><span class="u">kg</span></div>
-            <input type="date" id="nd" class="d-inp">
-            <select id="nph" class="ph-sel">
-              <option value="off">Off Protocol</option>
-              <option value="peptide">On Protocol</option>
-            </select>
-            <button class="add-btn" onclick="addW()">+ Log</button>
+        <div style="padding:0 16px;">
+          <div class="add-wrap">
+            <div class="add-ttl">Log Weight</div>
+            <div class="add-form">
+              <div class="kg-inp"><input type="number" id="nkg" placeholder="85.0" step="0.1" min="40" max="300"><span class="u">kg</span></div>
+              <input type="date" id="nd" class="d-inp">
+              <select id="nph" class="ph-sel">
+                <option value="on">On Protocol</option>
+                <option value="off">Off Protocol</option>
+              </select>
+              <button class="add-btn" onclick="addW()">+ Log</button>
+            </div>
           </div>
-        </div>
-        <div class="log-wrap">
-          <div class="log-hdr"><span>Date</span><span>Weight</span><span>Change</span></div>
-          <div id="wlog"></div>
+          <div class="chart-wrap">
+            <div class="chart-ttl">Weight Journey</div>
+            <canvas id="wc" height="160"></canvas>
+          </div>
+          <div class="log-wrap">
+            <div class="log-hdr"><span>Date</span><span>Weight</span><span>Change</span></div>
+            <div id="wlog"><div style="padding:20px;text-align:center;font-size:12px;color:var(--muted);">No entries yet — log your first weight above</div></div>
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
+// ── API KEY ──────────────────────────────
+function showApiInput(){
+  document.getElementById('apiInputRow').style.display='flex';
+  document.getElementById('apiKeyInput').focus();
+}
+function saveApiKey(){
+  const k=document.getElementById('apiKeyInput').value.trim();
+  if(!k.startsWith('sk-')){alert('Invalid key — must start with sk-');return;}
+  sessionStorage.setItem('aak',k);
+  document.getElementById('apiBanner').style.display='none';
+  document.getElementById('apiInputRow').style.display='none';
+}
+function getApiKey(){return sessionStorage.getItem('aak');}
+// Hide banner if key already saved
+if(getApiKey()){
+  document.getElementById('apiBanner').style.display='none';
+}
+
+// ── BLOOD RESULTS ────────────────────────
+function saveBloodResults(){
+  const fields=['hba1c','ldl','hcy','egfr','tg','igf','vitd','alt','stack'];
+  const data={};
+  fields.forEach(f=>{
+    const v=document.getElementById('b-'+f)?.value.trim();
+    if(v)data[f]=v;
+  });
+  sessionStorage.setItem('bloodData',JSON.stringify(data));
+  document.getElementById('bf-saved').style.display='block';
+  setTimeout(()=>document.getElementById('bf-saved').style.display='none',3000);
+}
+
+function getBloodContext(){
+  try{
+    const d=JSON.parse(sessionStorage.getItem('bloodData')||'{}');
+    if(!Object.keys(d).length)return '';
+    let ctx='\n\nUSER\'S BLOOD RESULTS:';
+    if(d.hba1c)ctx+=` HbA1c: ${d.hba1c}%,`;
+    if(d.ldl)ctx+=` LDL: ${d.ldl} mmol/L,`;
+    if(d.hcy)ctx+=` Homocysteine: ${d.hcy} umol/L,`;
+    if(d.egfr)ctx+=` eGFR: ${d.egfr} mL/min,`;
+    if(d.tg)ctx+=` Triglycerides: ${d.tg} mmol/L,`;
+    if(d.igf)ctx+=` IGF-1: ${d.igf} nmol/L,`;
+    if(d.vitd)ctx+=` Vitamin D: ${d.vitd} nmol/L,`;
+    if(d.alt)ctx+=` ALT: ${d.alt} U/L,`;
+    if(d.stack)ctx+=` Current peptide stack: ${d.stack}.`;
+    return ctx;
+  }catch(e){return '';}
+}
+
 // ── WEIGHT DATA ──────────────────────────
-const SEED=[
-  {date:'2025-12-08',kg:126.5,phase:'peptide'},{date:'2025-12-10',kg:125.9,phase:'peptide'},
-  {date:'2025-12-11',kg:125.3,phase:'peptide'},{date:'2025-12-12',kg:125.0,phase:'peptide'},
-  {date:'2025-12-15',kg:124.7,phase:'peptide'},{date:'2025-12-22',kg:123.1,phase:'peptide'},
-  {date:'2025-12-29',kg:123.2,phase:'peptide'},{date:'2026-01-05',kg:121.7,phase:'peptide'},
-  {date:'2026-01-12',kg:121.0,phase:'peptide'},{date:'2026-01-19',kg:120.9,phase:'peptide'},
-  {date:'2026-01-26',kg:119.2,phase:'peptide'},{date:'2026-02-02',kg:117.8,phase:'peptide'},
-  {date:'2026-02-09',kg:118.7,phase:'peptide'},{date:'2026-02-23',kg:117.4,phase:'peptide'},
-  {date:'2026-03-02',kg:116.2,phase:'peptide'},{date:'2026-03-09',kg:115.9,phase:'peptide'},
-  {date:'2026-03-16',kg:114.3,phase:'peptide'},{date:'2026-03-23',kg:114.1,phase:'peptide'},
-  {date:'2026-03-30',kg:114.0,phase:'off'},{date:'2026-04-06',kg:113.4,phase:'off'},
-  {date:'2026-04-13',kg:112.8,phase:'off'},{date:'2026-04-20',kg:113.1,phase:'off'},
-];
-function loadW(){try{const s=localStorage.getItem('hw');if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(SEED));}
-function saveW(d){try{localStorage.setItem('hw',JSON.stringify(d));}catch(e){}}
+function loadW(){try{const s=localStorage.getItem('pub_weights');if(s)return JSON.parse(s);}catch(e){}return [];}
+function saveW2(d){try{localStorage.setItem('pub_weights',JSON.stringify(d));}catch(e){}}
 let W=loadW();
 function fd(d){return new Date(d+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'});}
 
 function renderW(){
   const asc=[...W].sort((a,b)=>a.date.localeCompare(b.date));
   const desc=[...W].sort((a,b)=>b.date.localeCompare(a.date));
-  const f=asc[0],l=asc[asc.length-1];
-  const lost=(f.kg-l.kg).toFixed(1);
-  const days=Math.round((new Date(l.date)-new Date(f.date))/86400000);
-  const wks=Math.round(days/7);
-  const rate=(parseFloat(lost)/Math.max(wks,1)).toFixed(2);
-  document.getElementById('wv-cur').textContent=l.kg+' kg';
-  document.getElementById('wv-date').textContent=fd(l.date);
-  document.getElementById('wv-lost').textContent='−'+lost+' kg';
-  document.getElementById('wv-wks').textContent=wks+' weeks';
-  document.getElementById('wv-rate').textContent=rate+' kg';
-  document.getElementById('hdr-cur').textContent=l.kg+' kg';
-  document.getElementById('hdr-lost').textContent='−'+lost+' kg';
-
   const log=document.getElementById('wlog');
+  if(!W.length){log.innerHTML='<div style="padding:20px;text-align:center;font-size:12px;color:var(--muted);">No entries yet</div>';drawChart([]);return;}
   log.innerHTML='';
-  desc.forEach((e,i)=>{
+  desc.forEach((e)=>{
     const ai=asc.findIndex(x=>x.date===e.date);
     const prev=asc[ai-1];
     const chg=prev?(e.kg-prev.kg):null;
@@ -495,74 +351,38 @@ function renderW(){
 function drawChart(asc){
   const c=document.getElementById('wc');
   const ctx=c.getContext('2d');
+  if(!asc.length){ctx.clearRect(0,0,c.width,c.height);return;}
   const dpr=window.devicePixelRatio||1;
-  const W2=c.parentElement.clientWidth-28;
-  const H=160;
-  c.width=W2*dpr;c.height=H*dpr;
-  c.style.width=W2+'px';c.style.height=H+'px';
+  const W2=c.parentElement.clientWidth-28,H=160;
+  c.width=W2*dpr;c.height=H*dpr;c.style.width=W2+'px';c.style.height=H+'px';
   ctx.scale(dpr,dpr);
-  const pad={t:12,r:10,b:24,l:36};
-  const cw=W2-pad.l-pad.r,ch=H-pad.t-pad.b;
+  const pad={t:12,r:10,b:24,l:36},cw=W2-pad.l-pad.r,ch=H-pad.t-pad.b;
   const kgs=asc.map(d=>d.kg);
   const minK=Math.floor(Math.min(...kgs))-1,maxK=Math.ceil(Math.max(...kgs))+1;
   const ts=asc.map(d=>new Date(d.date+'T00:00:00').getTime());
   const minT=Math.min(...ts),maxT=Math.max(...ts);
-  const xP=t=>pad.l+((t-minT)/(maxT-minT))*cw;
+  const xP=t=>minT===maxT?pad.l+cw/2:pad.l+((t-minT)/(maxT-minT))*cw;
   const yP=k=>pad.t+((maxK-k)/(maxK-minK))*ch;
   ctx.clearRect(0,0,W2,H);
   for(let k=Math.ceil(minK);k<=maxK;k+=2){
     const y=yP(k);
-    ctx.strokeStyle='#1e2832';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W2-pad.r,y);ctx.stroke();
-    ctx.fillStyle='#5a6a7a';ctx.font='8px DM Mono,monospace';ctx.textAlign='right';
-    ctx.fillText(k,pad.l-3,y+3);
-  }
-  const stopT=new Date('2026-03-31T00:00:00').getTime();
-  if(stopT>minT&&stopT<maxT){
-    const sx=xP(stopT);
-    ctx.strokeStyle='rgba(245,166,35,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(sx,pad.t);ctx.lineTo(sx,H-pad.b);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle='rgba(245,166,35,0.7)';ctx.font='8px Syne,sans-serif';ctx.textAlign='center';
-    ctx.fillText('Stopped',sx,pad.t+8);
+    ctx.strokeStyle='#1e2832';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W2-pad.r,y);ctx.stroke();
+    ctx.fillStyle='#5a6a7a';ctx.font='8px DM Mono,monospace';ctx.textAlign='right';ctx.fillText(k,pad.l-3,y+3);
   }
   ctx.beginPath();ctx.strokeStyle='#00d4b8';ctx.lineWidth=2;ctx.lineJoin='round';
-  asc.filter(d=>d.phase==='peptide').forEach((d,i)=>{
-    const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);
-    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-  });
+  asc.forEach((d,i)=>{const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
   ctx.stroke();
-  const off=asc.filter(d=>d.phase==='off');
-  if(off.length>0){
-    const ti=asc.findIndex(d=>d.phase==='off');
-    const con=asc[ti-1];
-    ctx.beginPath();ctx.strokeStyle='#f5a623';ctx.lineWidth=2;ctx.lineJoin='round';
-    if(con)ctx.moveTo(xP(new Date(con.date+'T00:00:00').getTime()),yP(con.kg));
-    off.forEach(d=>ctx.lineTo(xP(new Date(d.date+'T00:00:00').getTime()),yP(d.kg)));
-    ctx.stroke();
-  }
-  asc.forEach(d=>{
-    const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);
-    ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);
-    ctx.fillStyle=d.phase==='peptide'?'#00d4b8':'#f5a623';ctx.fill();
-  });
-  [[2025,11,'Dec'],[2026,0,'Jan'],[2026,1,'Feb'],[2026,2,'Mar'],[2026,3,'Apr']].forEach(([y,m,l])=>{
-    const t=new Date(y,m,1).getTime();
-    if(t>=minT-86400000*10&&t<=maxT+86400000*20){
-      ctx.fillStyle='#5a6a7a';ctx.font='8px Syne,sans-serif';ctx.textAlign='center';
-      ctx.fillText(l,xP(t),H-pad.b+14);
-    }
-  });
+  asc.forEach(d=>{const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle=d.phase==='on'?'#00d4b8':'#f5a623';ctx.fill();});
 }
 
 function addW(){
   const kg=parseFloat(document.getElementById('nkg').value);
   const date=document.getElementById('nd').value;
   const phase=document.getElementById('nph').value;
-  if(!kg||!date||kg<80||kg>200){alert('Enter valid weight and date.');return;}
+  if(!kg||!date||kg<40||kg>300){alert('Enter valid weight and date.');return;}
   const i=W.findIndex(w=>w.date===date);
   if(i>=0){W[i].kg=kg;W[i].phase=phase;}else W.push({date,kg,phase});
-  saveW(W);renderW();
+  saveW2(W);renderW();
   document.getElementById('nkg').value='';
 }
 document.getElementById('nd').value=new Date().toISOString().split('T')[0];
@@ -577,26 +397,21 @@ function switchTab(t){
 }
 
 // ── AGENTS ───────────────────────────────
-const PC=`PATIENT: Hans, 63yo, Brisbane.
-Weight: 126.5kg (8 Dec 2025) → ~113kg now. Lost 13.4kg. Stopped peptides end March. Plateaued ~113kg since.
-BLOODS Dec→Mar: HbA1c 5.7→5.0% (reversed prediabetes), Cholesterol 6.4→5.8, TG 1.9→1.2 (excellent), LDL 4.22→3.97, Non-HDL 5.08→4.52, VitD 68→80, B12 297→>1476, Homocysteine 27.6→21.9 (STILL HIGH >20), IGF-1 20→24, Cortisol 320→410 (normal), ALT 36→19 (much better), eGFR 58 (BORDERLINE).
-STACK Dec-Mar: Retatrutide, Tesamorelin, Ipamorelin, HGH 24iu, BPC-157/TB-500, MOTS-c, 5-Amino-1MQ, GHK-Cu, LIPO-C+B12.
-CURRENT SUPPLEMENTS: Methylcobalamin B12 1000mcg daily + Nature's Sunshine Super Activated B Complex (active B6/folate/CoQ10) daily.
-WATCH: HCY 21.9 (CV risk), eGFR 58 (kidney), LDL 3.97.`;
+const BASE_SYSTEM=`You are one of 12 world-leading peptide researchers and medical specialists on an expert panel. Answer questions about peptides, reconstitution, dosing protocols, mechanisms, clinical applications, and peptide science from your specific area of expertise. Be balanced — acknowledge both the potential and the limitations of peptide therapy. Always recommend consulting a qualified healthcare provider for personal medical decisions. Keep responses concise: 2 sentences of commentary, then 3 bullet recommendations.`;
 
 const AGENTS=[
-  {id:1,i:"VdB",n:"Victor de Bold",c:"PhD, FRSC",s:"Cardiac / ANF",p:"You are Victor de Bold, discoverer of ANF. Calm, precise, collegial. Lead with Hans's impressive cardiovascular wins (TG 1.9→1.2, HbA1c reversal). Then note homocysteine 21.9 and eGFR 58 as monitoring priorities. Tone: measured, professorial, encouraging."},
-  {id:2,i:"RG",n:"Roger Guillemin",c:"MD, PhD, Nobel",s:"Neuroendocrinology",p:"You are Roger Guillemin, Nobel laureate. Wise, intellectually curious. Acknowledge the IGF-1 recovery (20→24) positively. Discuss the HPA axis nuances of his GH stack with scientific depth. Tone: authoritative, thoughtful."},
-  {id:3,i:"AVS",n:"Andrew V. Schally",c:"PhD, Nobel",s:"GnRH / Oncology",p:"You are Andrew Schally, Nobel laureate. Direct but fair. Lead with the remarkable metabolic turnaround. Raise PSA monitoring as prudent standard practice for 63yo using GH peptides — not as a scare. Tone: direct, balanced."},
-  {id:4,i:"CB",n:"Cyril Bowers",c:"MD",s:"GHRP / Secretagogues",p:"You are Cyril Bowers, discoverer of GHS. Genuinely enthusiastic about Hans's results. Lead with excitement about his GH axis response. Discuss how the stack could be refined for even better results. Tone: warm, enthusiastic mentor."},
-  {id:5,i:"DT",n:"David Tasman",c:"MD, PhD",s:"BPC-157 / Regeneration",p:"You are David Tasman, regenerative medicine researcher. Optimistic and practical. Celebrate the ALT improvement (36→19) as likely BPC-157 hepatoprotection. Discuss what these peptides protected during his aggressive protocol. Tone: warm, forward-looking."},
-  {id:6,i:"WD",n:"William Diament",c:"MD, FACEP",s:"Clinical Protocols",p:"You are William Diament, clinical peptide specialist. Pragmatic, empowering. Acknowledge what worked brilliantly. Give clear, concrete, actionable next protocol recommendations. Tone: practical, encouraging, like a knowledgeable GP on your side."},
-  {id:7,i:"RP",n:"Richard Pepino",c:"PhD, FACSM",s:"GLP-1 / Metabolic",p:"You are Richard Pepino, incretin biology expert. Genuinely excited by Hans's Retatrutide results — reversing prediabetes in 4 months is exceptional. Explain why and what the plateau means. Be optimistic. Tone: excited, science-forward, encouraging."},
-  {id:8,i:"NC",n:"Nir Cohen",c:"PhD",s:"Immune / GHK-Cu",p:"You are Nir Cohen, peptide immunology researcher. Warm, collaborative. Note the liver enzyme normalisation and what GHK-Cu and MOTS-c contributed to immune resilience. Tone: collegial, appreciative of good science."},
-  {id:9,i:"SL",n:"Svend Lund",c:"PhD",s:"Semaglutide / Drug Design",p:"You are Svend Lund, Novo Nordisk chemist behind semaglutide. Precise, fair-minded. Compare Retatrutide vs semaglutide vs tirzepatide evenhandedly for Hans's situation. Tone: technical but accessible."},
-  {id:10,i:"JG",n:"Jean-Claude Giguère",c:"MD, PhD",s:"Melanocortins / Ageing",p:"You are Jean-Claude Giguère, healthy ageing researcher. Warm, life-affirming. 63 is not old and Hans proves what's possible. Focus on what his protocol achieved for metabolic age and what's next. Tone: enthusiastic, forward-looking."},
-  {id:11,i:"EK",n:"Elena Kovalenko",c:"PhD, DSc",s:"Thymic / Immunity",p:"You are Elena Kovalenko, thymic peptide researcher. Methodical, quietly confident. Note TB-500 thymosin-beta-4 and MOTS-c contributions. Suggest thymic peptides for a future longevity protocol at 63. Tone: methodical, quietly optimistic."},
-  {id:12,i:"MB",n:"Marko Bratic",c:"MD, PhD",s:"MOTS-c / Mitochondrial",p:"You are Marko Bratic, geroscientist. Genuinely excited — Hans is living proof of mitochondrial peptide potential. Lead with enthusiasm about MOTS-c and 5-Amino-1MQ contributions to his HbA1c reversal. Paint an optimistic longevity picture. Tone: visionary, enthusiastic."}
+  {id:1,i:"VdB",n:"Victor de Bold",c:"PhD, FRSC",s:"Cardiac / ANF",p:"You are Victor de Bold, discoverer of atrial natriuretic factor. Focus on cardiovascular peptides, cardiometabolic health, and how peptides affect heart and kidney function."},
+  {id:2,i:"RG",n:"Roger Guillemin",c:"MD, PhD, Nobel",s:"Neuroendocrinology",p:"You are Roger Guillemin, Nobel laureate. Focus on hypothalamic peptides, pituitary regulation, and the neuroendocrine effects of GH-axis peptides."},
+  {id:3,i:"AVS",n:"Andrew V. Schally",c:"PhD, Nobel",s:"GnRH / Oncology",p:"You are Andrew Schally, Nobel laureate. Focus on peptide safety, GnRH analogues, and oncological considerations of peptide use."},
+  {id:4,i:"CB",n:"Cyril Bowers",c:"MD",s:"GHRP / Secretagogues",p:"You are Cyril Bowers, discoverer of growth hormone secretagogues. You are the world expert on GHRP peptides, ipamorelin, tesamorelin, and GH optimisation protocols. Enthusiastic and thorough."},
+  {id:5,i:"DT",n:"David Tasman",c:"MD, PhD",s:"BPC-157 / Regeneration",p:"You are David Tasman, regenerative medicine researcher. Focus on BPC-157, TB-500, tissue healing, gut protection, and tendon/ligament repair peptides."},
+  {id:6,i:"WD",n:"William Diament",c:"MD, FACEP",s:"Clinical Protocols",p:"You are William Diament, clinical peptide specialist. Give practical protocol guidance — dosing, cycling, combinations, injection technique, and clinical monitoring."},
+  {id:7,i:"RP",n:"Richard Pepino",c:"PhD, FACSM",s:"GLP-1 / Metabolic",p:"You are Richard Pepino, incretin biology expert. Focus on GLP-1 agonists, metabolic peptides, weight loss, insulin sensitivity, and gut hormone biology."},
+  {id:8,i:"NC",n:"Nir Cohen",c:"PhD",s:"Immune / GHK-Cu",p:"You are Nir Cohen, host defence peptide expert. Focus on antimicrobial peptides, GHK-Cu, immune modulation, and anti-inflammatory peptide applications."},
+  {id:9,i:"SL",n:"Svend Lund",c:"PhD",s:"Drug Design / GLP-1",p:"You are Svend Lund, medicinal chemist behind semaglutide. Focus on peptide drug design, half-life extension, pharmaceutical vs research-grade considerations."},
+  {id:10,i:"JG",n:"Jean-Claude Giguère",c:"MD, PhD",s:"Melanocortins / Ageing",p:"You are Jean-Claude Giguère, peptide endocrinology researcher. Focus on melanocortin peptides, PT-141, anti-ageing protocols, and healthy longevity."},
+  {id:11,i:"EK",n:"Elena Kovalenko",c:"PhD, DSc",s:"Thymic / Immunity",p:"You are Elena Kovalenko, thymic peptide researcher. Focus on thymalin, thymosin-alpha-1, TB-500, immune restoration, and longevity peptide protocols."},
+  {id:12,i:"MB",n:"Marko Bratic",c:"MD, PhD",s:"MOTS-c / Mitochondrial",p:"You are Marko Bratic, geroscientist. Focus on mitochondrial peptides — MOTS-c, humanin, 5-Amino-1MQ — and their role in metabolism, longevity, and insulin sensitivity."}
 ];
 
 const agList=document.getElementById('agList');
@@ -612,10 +427,7 @@ function addPhotos(e){
   Array.from(e.target.files).forEach(f=>{
     if(photos.length>=4)return;
     const r=new FileReader();
-    r.onload=ev=>{
-      photos.push({dataUrl:ev.target.result,base64:ev.target.result.split(',')[1],type:f.type||'image/jpeg'});
-      renderPhotos();
-    };
+    r.onload=ev=>{photos.push({dataUrl:ev.target.result,base64:ev.target.result.split(',')[1],type:f.type||'image/jpeg'});renderPhotos();};
     r.readAsDataURL(f);
   });
   e.target.value='';
@@ -632,174 +444,83 @@ function renderPhotos(){
 }
 function removePhoto(i){photos.splice(i,1);renderPhotos();}
 
-// ── TEXTAREA AUTO RESIZE ─────────────────
-const qi=document.getElementById('qi');
-qi.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
-qi.addEventListener('input',()=>{qi.style.height='44px';qi.style.height=Math.min(qi.scrollHeight,120)+'px';});
-
-function useQ(el){qi.value=el.textContent.trim();send();}
-
 // ── SEND ─────────────────────────────────
+const qi=document.getElementById('qi');
+qi.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}});
+qi.addEventListener('input',()=>{qi.style.height='44px';qi.style.height=Math.min(qi.scrollHeight,120)+'px';});
+function useQ(el){qi.value=el.textContent.trim();sendMsg();}
+
 let busy=false;
-async function send(){
+async function sendMsg(){
   const q=qi.value.trim();
   if(!q||busy)return;
+  const key=getApiKey();
+  if(!key){showApiInput();document.getElementById('apiKeyInput').focus();return;}
   busy=true;
   document.getElementById('sb').disabled=true;
   document.getElementById('welcome')?.remove();
-
   const msgs=document.getElementById('msgs');
-
-  // Show photo thumbs
   const snap=[...photos];
   if(snap.length>0){
     photos=[];renderPhotos();
-    const pr=document.createElement('div');
-    pr.style.cssText='display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;';
-    snap.forEach(p=>{
-      const img=document.createElement('img');
-      img.src=p.dataUrl;
-      img.style.cssText='width:52px;height:52px;object-fit:cover;border-radius:6px;border:1px solid var(--b2);';
-      pr.appendChild(img);
-    });
+    const pr=document.createElement('div');pr.style.cssText='display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;';
+    snap.forEach(p=>{const img=document.createElement('img');img.src=p.dataUrl;img.style.cssText='width:52px;height:52px;object-fit:cover;border-radius:6px;border:1px solid var(--b2);';pr.appendChild(img);});
     msgs.appendChild(pr);
   }
-
-  // User bubble
   const ub=document.createElement('div');ub.className='u-msg';
   ub.innerHTML=`<div class="u-bubble">${esc(q)}</div>`;
   msgs.appendChild(ub);
   qi.value='';qi.style.height='44px';
-
-  // Panel group
   const pg=document.createElement('div');
   const lbl=document.createElement('div');lbl.className='panel-lbl';lbl.textContent='Panel — 12 specialists';
   pg.appendChild(lbl);msgs.appendChild(pg);scr();
-
-  // Latest weight context
-  const asc=[...W].sort((a,b)=>a.date.localeCompare(b.date));
-  const lw=asc[asc.length-1];
-  const wctx=`\nCURRENT WEIGHT: ${lw.kg}kg (${fd(lw.date)}).`;
-
-  // Batch 4 at a time
+  const bloodCtx=getBloodContext();
   for(let b=0;b<AGENTS.length;b+=4){
-    await Promise.all(AGENTS.slice(b,b+4).map((a,i)=>callAgent(a,q,pg,i*150,wctx,snap)));
+    await Promise.all(AGENTS.slice(b,b+4).map((a,i)=>callAgent(a,q,pg,i*120,bloodCtx,snap,key)));
     if(b+4<AGENTS.length)await sl(600);
   }
-
-  busy=false;
-  document.getElementById('sb').disabled=false;
+  busy=false;document.getElementById('sb').disabled=false;
   AGENTS.forEach(a=>document.getElementById('ag-'+a.id)?.classList.remove('on'));
 }
 
-async function callAgent(agent,q,container,delay,wctx,snap){
+async function callAgent(agent,q,container,delay,bloodCtx,snap,key){
   await sl(delay);
   document.getElementById('ag-'+agent.id)?.classList.add('on');
-
   const card=document.createElement('div');card.className='rcard';card.id='rc-'+agent.id;
-  card.innerHTML=`
-    <div class="rcard-hdr" onclick="tog(${agent.id})">
-      <div class="rcard-left">
-        <div class="rcard-av">${agent.i}</div>
-        <div><div class="rcard-name">${agent.n}</div><div class="rcard-spec">${agent.c} · ${agent.s}</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-        <div class="rcard-preview" id="rp-${agent.id}"><div class="dots"><span></span><span></span><span></span></div></div>
-        <div class="rcard-chev" id="rc-chev-${agent.id}">›</div>
-      </div>
-    </div>
-    <div class="rcard-body" id="rb-${agent.id}"></div>`;
+  card.innerHTML=`<div class="rcard-hdr" onclick="tog(${agent.id})"><div class="rcard-left"><div class="rcard-av">${agent.i}</div><div><div class="rcard-name">${agent.n}</div><div class="rcard-spec">${agent.c} · ${agent.s}</div></div></div><div style="display:flex;align-items:center;gap:8px;flex-shrink:0;"><div class="rcard-preview" id="rp-${agent.id}"><div class="dots"><span></span><span></span><span></span></div></div><div class="rcard-chev" id="rc-chev-${agent.id}">›</div></div></div><div class="rcard-body" id="rb-${agent.id}"></div>`;
   container.appendChild(card);scr();
-
-  const sys=`${PC}${wctx}\n\nPERSONA: ${agent.p}\n\nRespond in this format only - 2 sentences leading with a positive observation then one watch item using Hans actual numbers. Then: Recommendations: bullet 1 bullet 2 bullet 3. No preamble no sign-off.`;
-
+  const sys=`${BASE_SYSTEM}${bloodCtx}\n\nYOUR PERSONA: ${agent.p}\n\nFORMAT: 2 sentences from your specialty perspective, then:\nRecommendations:\n• action 1\n• action 2\n• action 3\nNo preamble, no sign-off.`;
   let data=null;
   for(let att=0;att<3;att++){
     try{
-      const msgContent=snap.length>0
-        ?[...snap.map(p=>({type:'image',source:{type:'base64',media_type:p.type,data:p.base64}})),{type:'text',text:q}]
-        :q;
-      const apiKey = sessionStorage.getItem('aak');
-      const res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:sys,messages:[{role:'user',content:msgContent}]})});
-      data=await res.json();
-      if(data.content)break;
-      await sl(1000*(att+1));
+      const msgContent=snap.length>0?[...snap.map(p=>({type:'image',source:{type:'base64',media_type:p.type,data:p.base64}})),{type:'text',text:q}]:q;
+      const res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:sys,messages:[{role:'user',content:msgContent}]})});
+      data=await res.json();if(data.content)break;await sl(1000*(att+1));
     }catch(e){if(att===2)break;await sl(1500);}
   }
-
   const prev=document.getElementById('rp-'+agent.id);
   const body=document.getElementById('rb-'+agent.id);
-
   if(data?.content?.[0]?.text){
     const text=data.content[0].text;
     const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
     let com=[],buls=[],inR=false;
-    lines.forEach(l=>{
-      if(l.toLowerCase().startsWith('rec')){inR=true;return;}
-      if(inR&&(l.startsWith('•')||l.startsWith('-')||l.startsWith('*')||/^\d\./.test(l))){
-        buls.push(l.replace(/^[•\-\*\d\.]\s*/,''));
-      } else if(!inR) com.push(l);
-    });
-    const full=com.join(' ');
-    prev.textContent=full.substring(0,80)+(full.length>80?'…':'');
+    lines.forEach(l=>{if(l.toLowerCase().startsWith('rec')){inR=true;return;}if(inR&&(l.startsWith('•')||l.startsWith('-')||/^\d\./.test(l))){buls.push(l.replace(/^[•\-\d\.]\s*/,''));}else if(!inR)com.push(l);});
+    prev.textContent=com.join(' ').substring(0,80)+(com.join(' ').length>80?'…':'');
     body.innerHTML='';
-    if(com.length){const p=document.createElement('p');p.textContent=full;body.appendChild(p);}
-    if(buls.length){
-      const rl=document.createElement('div');rl.className='rcard-rec-lbl';rl.textContent='Recommendations';body.appendChild(rl);
-      buls.forEach(b=>{
-        const row=document.createElement('div');row.className='rcard-bullet';
-        row.innerHTML=`<span>•</span><span>${esc(b)}</span>`;body.appendChild(row);
-      });
-    }
-  } else {
-    prev.textContent='Unable to respond.';
-  }
-
+    if(com.length){const p=document.createElement('p');p.textContent=com.join(' ');body.appendChild(p);}
+    if(buls.length){const rl=document.createElement('div');rl.className='rcard-rec-lbl';rl.textContent='Recommendations';body.appendChild(rl);buls.forEach(b=>{const row=document.createElement('div');row.className='rcard-bullet';row.innerHTML=`<span>•</span><span>${esc(b)}</span>`;body.appendChild(row);});}
+  }else{prev.textContent='Unable to respond.';}
   document.getElementById('ag-'+agent.id)?.classList.remove('on');scr();
 }
 
 function tog(id){
-  const body=document.getElementById('rb-'+id);
-  const chev=document.getElementById('rc-chev-'+id);
-  const card=document.getElementById('rc-'+id);
-  const open=body.style.display==='block';
-  body.style.display=open?'none':'block';
-  chev.style.transform=open?'':'rotate(90deg)';
-  card.classList.toggle('open',!open);
-  if(!open)scr();
+  const body=document.getElementById('rb-'+id);const chev=document.getElementById('rc-chev-'+id);const card=document.getElementById('rc-'+id);
+  const open=body.style.display==='block';body.style.display=open?'none':'block';chev.style.transform=open?'':'rotate(90deg)';card.classList.toggle('open',!open);if(!open)scr();
 }
-
 function scr(){const m=document.getElementById('msgs');m.scrollTop=m.scrollHeight;}
 function sl(ms){return new Promise(r=>setTimeout(r,ms));}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-
-// ── API KEY CHECK ────────────────────────
-function checkApiKey() {
-  let key = sessionStorage.getItem('aak');
-  if (!key) {
-    key = prompt('Enter your Anthropic API key (starts with sk-ant-)');
-    if (key && key.startsWith('sk-')) {
-      sessionStorage.setItem('aak', key);
-    } else if (key) {
-      alert('Invalid key format. Please try again.');
-      return false;
-    } else {
-      return false;
-    }
-  }
-  return true;
-}
-
-// Wrapper that checks API key before sending
-async function sendWithKey() {
-  if (!checkApiKey()) return;
-  await send();
-}
-
-// Init
-window.addEventListener('resize',()=>{const asc=[...W].sort((a,b)=>a.date.localeCompare(b.date));if(document.getElementById('weightView').classList.contains('active'))drawChart(asc);});
+window.addEventListener('resize',()=>{if(document.getElementById('weightView').classList.contains('active')){const asc=[...W].sort((a,b)=>a.date.localeCompare(b.date));drawChart(asc);}});
 </script>
 </body>
 </html>
