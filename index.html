@@ -204,14 +204,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 
     <!-- PANEL VIEW -->
     <div class="panel-view active" id="panelView">
-      <div id="apiBanner" class="api-banner">
-        <div class="api-banner-text">Enter your Anthropic API key to activate the panel. <a href="https://console.anthropic.com" target="_blank" style="color:var(--amber);">Get one free →</a></div>
-        <button class="api-banner-btn" onclick="showApiInput()">Add Key</button>
-      </div>
-      <div id="apiInputRow" class="api-input-row" style="display:none;">
-        <input type="password" id="apiKeyInput" placeholder="sk-ant-...">
-        <button class="api-submit" onclick="saveApiKey()">Save</button>
-      </div>
+
 
       <div class="msgs" id="msgs">
         <div id="welcome" class="welcome">
@@ -274,23 +267,8 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 </div>
 
 <script>
-// ── API KEY ──────────────────────────────
-function showApiInput(){
-  document.getElementById('apiInputRow').style.display='flex';
-  document.getElementById('apiKeyInput').focus();
-}
-function saveApiKey(){
-  const k=document.getElementById('apiKeyInput').value.trim();
-  if(!k.startsWith('sk-')){alert('Invalid key — must start with sk-');return;}
-  sessionStorage.setItem('aak',k);
-  document.getElementById('apiBanner').style.display='none';
-  document.getElementById('apiInputRow').style.display='none';
-}
-function getApiKey(){return sessionStorage.getItem('aak');}
-// Hide banner if key already saved
-if(getApiKey()){
-  document.getElementById('apiBanner').style.display='none';
-}
+// API key handled server-side via Netlify function
+function getApiKey(){return null;} // not needed - server uses env var
 
 // ── BLOOD RESULTS ────────────────────────
 function saveBloodResults(){
@@ -454,8 +432,7 @@ let busy=false;
 async function sendMsg(){
   const q=qi.value.trim();
   if(!q||busy)return;
-  const key=getApiKey();
-  if(!key){showApiInput();document.getElementById('apiKeyInput').focus();return;}
+  const key=null; // server handles auth
   busy=true;
   document.getElementById('sb').disabled=true;
   document.getElementById('welcome')?.remove();
@@ -476,14 +453,14 @@ async function sendMsg(){
   pg.appendChild(lbl);msgs.appendChild(pg);scr();
   const bloodCtx=getBloodContext();
   for(let b=0;b<AGENTS.length;b+=4){
-    await Promise.all(AGENTS.slice(b,b+4).map((a,i)=>callAgent(a,q,pg,i*120,bloodCtx,snap,key)));
+    await Promise.all(AGENTS.slice(b,b+4).map((a,i)=>callAgent(a,q,pg,i*120,bloodCtx,snap)));
     if(b+4<AGENTS.length)await sl(600);
   }
   busy=false;document.getElementById('sb').disabled=false;
   AGENTS.forEach(a=>document.getElementById('ag-'+a.id)?.classList.remove('on'));
 }
 
-async function callAgent(agent,q,container,delay,bloodCtx,snap,key){
+async function callAgent(agent,q,container,delay,bloodCtx,snap){
   await sl(delay);
   document.getElementById('ag-'+agent.id)?.classList.add('on');
   const card=document.createElement('div');card.className='rcard';card.id='rc-'+agent.id;
@@ -494,7 +471,7 @@ async function callAgent(agent,q,container,delay,bloodCtx,snap,key){
   for(let att=0;att<3;att++){
     try{
       const msgContent=snap.length>0?[...snap.map(p=>({type:'image',source:{type:'base64',media_type:p.type,data:p.base64}})),{type:'text',text:q}]:q;
-      const res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:sys,messages:[{role:'user',content:msgContent}]})});
+      const res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:sys,messages:[{role:'user',content:msgContent}]})});
       data=await res.json();if(data.content)break;await sl(1000*(att+1));
     }catch(e){if(att===2)break;await sl(1500);}
   }
