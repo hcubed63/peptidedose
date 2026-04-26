@@ -147,8 +147,8 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 .d-inp,.ph-sel{background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:9px 10px;color:var(--text);font-family:'Syne',sans-serif;font-size:12px;outline:none;}
 .add-btn{background:var(--teal);color:#000;border:none;border-radius:6px;padding:10px 16px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
 .log-wrap{background:var(--surf);border:1px solid var(--b1);border-radius:6px;overflow:hidden;}
-.log-hdr{display:grid;grid-template-columns:1fr 80px 70px;gap:8px;padding:8px 12px;font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);}
-.log-row{display:grid;grid-template-columns:1fr 80px 70px;gap:8px;padding:10px 12px;border-bottom:1px solid var(--b1);align-items:center;transition:background 0.15s;}
+.log-hdr{display:grid;grid-template-columns:1fr 80px 70px 60px;gap:8px;padding:8px 12px;font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);}
+.log-row{display:grid;grid-template-columns:1fr 80px 70px 60px;gap:8px;padding:10px 12px;border-bottom:1px solid var(--b1);align-items:center;transition:background 0.15s;}
 .log-row:last-child{border-bottom:none;}
 .log-row:hover{background:var(--surf2);}
 .log-d{font-size:11px;color:var(--muted);}
@@ -179,7 +179,11 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
     <div class="sidebar">
       <div class="sb-sec">Your Blood Results <span style="color:var(--teal);font-size:7px;">(optional)</span></div>
       <div class="blood-form">
-        <div class="bf-title">Enter your results for personalised responses</div>
+        <div class="bf-title">Your profile &amp; blood results</div>
+        <div class="bf-grid">
+          <div class="bf-field"><div class="bf-label">Your Name</div><input class="bf-input" id="b-name" placeholder="e.g. Sarah"></div>
+          <div class="bf-field"><div class="bf-label">Age</div><input class="bf-input" id="b-age" placeholder="e.g. 45"></div>
+        </div>
         <div class="bf-grid">
           <div class="bf-field"><div class="bf-label">HbA1c %</div><input class="bf-input" id="b-hba1c" placeholder="e.g. 5.5"></div>
           <div class="bf-field"><div class="bf-label">LDL mmol/L</div><input class="bf-input" id="b-ldl" placeholder="e.g. 3.5"></div>
@@ -257,7 +261,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
             <canvas id="wc" height="160"></canvas>
           </div>
           <div class="log-wrap">
-            <div class="log-hdr"><span>Date</span><span>Weight</span><span>Change</span></div>
+            <div class="log-hdr"><span>Date</span><span>Weight</span><span>Change</span><span>Actions</span></div>
             <div id="wlog"><div style="padding:20px;text-align:center;font-size:12px;color:var(--muted);">No entries yet — log your first weight above</div></div>
           </div>
         </div>
@@ -278,16 +282,19 @@ function saveBloodResults(){
     const v=document.getElementById('b-'+f)?.value.trim();
     if(v)data[f]=v;
   });
-  sessionStorage.setItem('bloodData',JSON.stringify(data));
+  localStorage.setItem('bloodData',JSON.stringify(data));
   document.getElementById('bf-saved').style.display='block';
   setTimeout(()=>document.getElementById('bf-saved').style.display='none',3000);
 }
 
 function getBloodContext(){
   try{
-    const d=JSON.parse(sessionStorage.getItem('bloodData')||'{}');
+    const d=JSON.parse(localStorage.getItem('bloodData')||'{}');
     if(!Object.keys(d).length)return '';
-    let ctx='\n\nUSER\'S BLOOD RESULTS:';
+    let ctx='\n\nUSER PROFILE:';
+    if(d.name)ctx+=` Name: ${d.name},`;
+    if(d.age)ctx+=` Age: ${d.age},`;
+    ctx+=' BLOOD RESULTS:';
     if(d.hba1c)ctx+=` HbA1c: ${d.hba1c}%,`;
     if(d.ldl)ctx+=` LDL: ${d.ldl} mmol/L,`;
     if(d.hcy)ctx+=` Homocysteine: ${d.hcy} umol/L,`;
@@ -320,10 +327,22 @@ function renderW(){
     const cs=chg===null?'z':chg<0?'neg':'pos';
     const ct=chg===null?'—':(chg>0?'+':'')+chg.toFixed(1)+' kg';
     const r=document.createElement('div');r.className='log-row';
-    r.innerHTML=`<span class="log-d">${fd(e.date)}</span><span class="log-k">${e.kg} kg</span><span class="log-c ${cs}">${ct}</span>`;
+    r.innerHTML=`<span class="log-d">${fd(e.date)}</span><span class="log-k">${e.kg} kg</span><span class="log-c ${cs}">${ct}</span><span style="display:flex;gap:4px;"><button onclick="editW('${e.date}',${e.kg})" style="background:none;border:1px solid var(--b2);color:var(--muted);border-radius:3px;padding:2px 6px;font-size:9px;cursor:pointer;">edit</button><button onclick="delW('${e.date}')" style="background:none;border:1px solid var(--b2);color:var(--red);border-radius:3px;padding:2px 6px;font-size:9px;cursor:pointer;">del</button></span>`;
     log.appendChild(r);
   });
   drawChart(asc);
+}
+
+function delW(date){
+  if(!confirm('Delete this entry?'))return;
+  W=W.filter(w=>w.date!==date);
+  saveW2(W);renderW();
+}
+
+function editW(date,kg){
+  document.getElementById('nkg').value=kg;
+  document.getElementById('nd').value=date;
+  document.getElementById('nkg').focus();
 }
 
 function drawChart(asc){
@@ -364,6 +383,14 @@ function addW(){
   document.getElementById('nkg').value='';
 }
 document.getElementById('nd').value=new Date().toISOString().split('T')[0];
+// Load saved blood/profile data
+try{
+  const saved=JSON.parse(localStorage.getItem('bloodData')||'{}');
+  ['name','age','hba1c','ldl','hcy','egfr','tg','igf','vitd','alt','stack'].forEach(f=>{
+    const el=document.getElementById('b-'+f);
+    if(el&&saved[f])el.value=saved[f];
+  });
+}catch(e){}
 
 // ── TABS ─────────────────────────────────
 function switchTab(t){
