@@ -173,6 +173,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
   <div class="tabs">
     <div class="tab active" id="tab-p" onclick="switchTab('panel')">💬 Panel</div>
     <div class="tab" id="tab-w" onclick="switchTab('weight')">⚖️ Weight</div>
+    <div class="tab" id="tab-pr" onclick="switchTab('profile')">👤 Profile</div>
   </div>
 
   <div class="body">
@@ -267,6 +268,37 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
         </div>
       </div>
     </div>
+
+    <!-- PROFILE VIEW (mobile) -->
+    <div class="weight-view" id="profileView" style="background:var(--bg);">
+      <div class="wt-scroll">
+        <div style="padding:16px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Your Profile &amp; Blood Results</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+            <div class="bf-field"><div class="bf-label">Your Name</div><input class="bf-input" id="m-name" placeholder="e.g. Sarah" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">Age</div><input class="bf-input" id="m-age" placeholder="e.g. 45" style="font-size:15px;padding:10px;"></div>
+          </div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Blood Results</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+            <div class="bf-field"><div class="bf-label">HbA1c %</div><input class="bf-input" id="m-hba1c" placeholder="e.g. 5.5" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">LDL mmol/L</div><input class="bf-input" id="m-ldl" placeholder="e.g. 3.5" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">Homocysteine</div><input class="bf-input" id="m-hcy" placeholder="e.g. 12" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">eGFR</div><input class="bf-input" id="m-egfr" placeholder="e.g. 75" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">Triglycerides</div><input class="bf-input" id="m-tg" placeholder="e.g. 1.5" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">IGF-1</div><input class="bf-input" id="m-igf" placeholder="e.g. 22" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">Vit D</div><input class="bf-input" id="m-vitd" placeholder="e.g. 70" style="font-size:15px;padding:10px;"></div>
+            <div class="bf-field"><div class="bf-label">ALT U/L</div><input class="bf-input" id="m-alt" placeholder="e.g. 25" style="font-size:15px;padding:10px;"></div>
+          </div>
+          <div class="bf-field" style="margin-bottom:16px;">
+            <div class="bf-label">Your Peptide Stack</div>
+            <input class="bf-input" id="m-stack" placeholder="e.g. BPC-157, Ipamorelin, CJC-1295" style="font-size:15px;padding:10px;">
+          </div>
+          <button onclick="saveMobileProfile()" style="width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:8px;font-family:Syne,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-bottom:10px;">Save Profile</button>
+          <div id="m-saved" style="display:none;text-align:center;font-size:12px;color:var(--green);padding:8px;">✓ Saved — specialists will reference your data</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -283,6 +315,12 @@ function saveBloodResults(){
     if(v)data[f]=v;
   });
   localStorage.setItem('bloodData',JSON.stringify(data));
+  // Sync to mobile fields
+  const fields2=['name','age','hba1c','ldl','hcy','egfr','tg','igf','vitd','alt','stack'];
+  fields2.forEach(f=>{
+    const mb=document.getElementById('m-'+f);
+    if(mb&&data[f])mb.value=data[f];
+  });
   document.getElementById('bf-saved').style.display='block';
   setTimeout(()=>document.getElementById('bf-saved').style.display='none',3000);
 }
@@ -383,6 +421,39 @@ function addW(){
   document.getElementById('nkg').value='';
 }
 document.getElementById('nd').value=new Date().toISOString().split('T')[0];
+
+// Sync mobile profile fields with saved data on load
+function loadProfileFields(){
+  try{
+    const d=JSON.parse(localStorage.getItem('bloodData')||'{}');
+    const fields=['name','age','hba1c','ldl','hcy','egfr','tg','igf','vitd','alt','stack'];
+    fields.forEach(f=>{
+      const sb=document.getElementById('b-'+f);
+      const mb=document.getElementById('m-'+f);
+      if(sb&&d[f])sb.value=d[f];
+      if(mb&&d[f])mb.value=d[f];
+    });
+  }catch(e){}
+}
+loadProfileFields();
+
+function saveMobileProfile(){
+  const fields=['name','age','hba1c','ldl','hcy','egfr','tg','igf','vitd','alt','stack'];
+  const data={};
+  fields.forEach(f=>{
+    const mb=document.getElementById('m-'+f);
+    const sb=document.getElementById('b-'+f);
+    const v=mb?.value.trim()||sb?.value.trim()||'';
+    if(v){
+      data[f]=v;
+      // Sync to sidebar too
+      if(sb)sb.value=v;
+    }
+  });
+  localStorage.setItem('bloodData',JSON.stringify(data));
+  document.getElementById('m-saved').style.display='block';
+  setTimeout(()=>document.getElementById('m-saved').style.display='none',3000);
+}
 // Load saved blood/profile data
 try{
   const saved=JSON.parse(localStorage.getItem('bloodData')||'{}');
@@ -396,8 +467,10 @@ try{
 function switchTab(t){
   document.getElementById('tab-p').classList.toggle('active',t==='panel');
   document.getElementById('tab-w').classList.toggle('active',t==='weight');
+  document.getElementById('tab-pr').classList.toggle('active',t==='profile');
   document.getElementById('panelView').classList.toggle('active',t==='panel');
   document.getElementById('weightView').classList.toggle('active',t==='weight');
+  document.getElementById('profileView').classList.toggle('active',t==='profile');
   if(t==='weight')setTimeout(()=>renderW(),50);
 }
 
