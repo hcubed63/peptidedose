@@ -8,10 +8,10 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #080c10;--surf: #0b1520;--surf2: #141b22;--b1: #1e2832;--b2: #263040;
-  --teal: #00d4b8;--teal2: #00a896;--tglow: rgba(0,212,184,0.10);
-  --amber: #f5a623;--red: #ff5a5a;--green: #3dd68c;
-  --text: #e8edf2;--muted: #5a6a7a;--muted2: #3a4a5a;
+  --bg: #f7f4ef;--surf: #ffffff;--surf2: #f2ede6;--b1: #e8e1d8;--b2: #d9d0c4;
+  --teal: #5c7c6e;--teal2: #4a6659;--tglow: rgba(92,124,110,0.10);
+  --amber: #b87333;--red: #c0392b;--green: #4a7c59;
+  --text: #2c2416;--muted: #8c7d6a;--muted2: #b0a090;
 }
 html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;}
 .app{display:flex;flex-direction:column;height:100vh;height:100dvh;width:100vw;overflow:hidden;}
@@ -22,7 +22,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 .hdr-logo em{font-style:italic;color:var(--teal);}
 .hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .hdr-dot{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);animation:pulse 2s ease infinite;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px rgba(92,124,110,0.4);animation:pulse 2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 .calc-link{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--teal);border:1px solid var(--teal);padding:5px 10px;border-radius:4px;text-decoration:none;opacity:0.8;}
 
@@ -47,8 +47,8 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 .bf-input{background:var(--bg);border:1px solid var(--b2);border-radius:4px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:5px 7px;outline:none;width:100%;transition:border-color 0.2s;}
 .bf-input:focus{border-color:var(--teal);}
 .bf-input::placeholder{color:var(--muted2);}
-.bf-btn{width:100%;padding:7px;background:var(--teal);color:#000;border:none;border-radius:4px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
-.bf-btn:hover{background:#00f0d0;}
+.bf-btn{width:100%;padding:7px;background:var(--teal);color:#fff;border:none;border-radius:4px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
+.bf-btn:hover{background:var(--teal2);}
 .bf-saved{font-size:9px;color:var(--green);text-align:center;margin-top:6px;display:none;}
 
 /* Pills */
@@ -116,17 +116,17 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 #qi{flex:1;min-width:0;background:var(--bg);border:1px solid var(--b2);border-radius:8px;color:var(--text);font-family:'Syne',sans-serif;font-size:15px;padding:10px 12px;resize:none;height:44px;max-height:120px;outline:none;line-height:1.4;}
 #qi:focus{border-color:var(--teal);}
 #qi::placeholder{color:var(--muted2);}
-.send{flex-shrink:0;width:44px;height:44px;border:none;background:var(--teal);color:#000;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.send{flex-shrink:0;width:44px;height:44px;border:none;background:var(--teal);color:#fff;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .send:disabled{background:var(--b2);color:var(--muted);cursor:not-allowed;}
 
 /* API KEY BANNER */
 .api-banner{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:6px;padding:10px 14px;margin:12px 12px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .api-banner-text{font-size:11px;color:var(--amber);flex:1;line-height:1.5;}
-.api-banner-btn{background:var(--amber);color:#000;border:none;border-radius:4px;padding:6px 12px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.api-banner-btn{background:var(--amber);color:#fff;border:none;border-radius:4px;padding:6px 12px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .api-input-row{display:flex;gap:8px;align-items:center;margin:0 12px 10px;flex-shrink:0;}
 .api-input-row input{flex:1;background:var(--bg);border:1px solid var(--b2);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:8px 12px;outline:none;}
 .api-input-row input:focus{border-color:var(--amber);}
-.api-submit{background:var(--amber);color:#000;border:none;border-radius:6px;padding:8px 14px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
+.api-submit{background:var(--amber);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
 
 /* WEIGHT VIEW */
 .wt-scroll{flex:1;overflow-y:auto;padding:16px;min-height:0;height:100%;}
@@ -145,7 +145,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 .kg-inp input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:16px;width:70px;}
 .kg-inp .u{font-size:11px;color:var(--muted);}
 .d-inp,.ph-sel{background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:9px 10px;color:var(--text);font-family:'Syne',sans-serif;font-size:12px;outline:none;}
-.add-btn{background:var(--teal);color:#000;border:none;border-radius:6px;padding:10px 16px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.add-btn{background:var(--teal);color:#fff;border:none;border-radius:6px;padding:10px 16px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
 .log-wrap{background:var(--surf);border:1px solid var(--b1);border-radius:6px;overflow:hidden;}
 .log-hdr{display:grid;grid-template-columns:1fr 80px 70px 60px;gap:8px;padding:8px 12px;font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);}
 .log-row{display:grid;grid-template-columns:1fr 80px 70px 60px;gap:8px;padding:10px 12px;border-bottom:1px solid var(--b1);align-items:center;transition:background 0.15s;}
@@ -173,6 +173,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
   <div class="tabs">
     <div class="tab active" id="tab-p" onclick="switchTab('panel')">💬 Panel</div>
     <div class="tab" id="tab-w" onclick="switchTab('weight')">⚖️ Weight</div>
+    <div class="tab" id="tab-d" onclick="switchTab('dose')">💉 Doses</div>
     <div class="tab" id="tab-pr" onclick="switchTab('profile')">👤 Profile</div>
   </div>
 
@@ -269,6 +270,47 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
       </div>
     </div>
 
+    <!-- DOSE TRACKER VIEW -->
+    <div class="weight-view" id="doseView" style="background:var(--bg);">
+      <div class="wt-scroll">
+        <div style="padding:16px;">
+
+          <!-- GOOGLE CALENDAR CONNECT BANNER -->
+          <div id="gcal-banner" style="display:none;background:#fff;border:1px solid var(--b1);border-radius:10px;padding:14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="font-size:22px;">📅</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--text);">Sync to Google Calendar</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">Log doses directly to your calendar</div>
+              </div>
+            </div>
+            <button id="gcal-connect-btn" onclick="connectGCal()" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-family:Syne,sans-serif;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">Connect</button>
+          </div>
+
+          <!-- CONNECTED STATUS -->
+          <div id="gcal-connected" style="display:none;background:#fff;border:1px solid var(--b1);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
+            <div style="font-size:11px;color:var(--muted);">Google Calendar connected — doses will sync automatically</div>
+          </div>
+
+          <!-- TODAY -->
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;" id="dose-today-lbl">TODAY</div>
+
+          <div id="dose-cards" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;"></div>
+
+          <!-- STREAK STATS -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;" id="dose-stats"></div>
+
+          <!-- HISTORY -->
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">History</div>
+          <div class="log-wrap" id="dose-history">
+            <div style="padding:20px;text-align:center;font-size:12px;color:var(--muted);">No doses logged yet</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <!-- PROFILE VIEW (mobile) -->
     <div class="weight-view" id="profileView" style="background:var(--bg);">
       <div class="wt-scroll">
@@ -293,7 +335,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
             <div class="bf-label">Your Peptide Stack</div>
             <input class="bf-input" id="m-stack" placeholder="e.g. BPC-157, Ipamorelin, CJC-1295" style="font-size:15px;padding:10px;">
           </div>
-          <button onclick="saveMobileProfile()" style="width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:8px;font-family:Syne,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-bottom:10px;">Save Profile</button>
+          <button onclick="saveMobileProfile()" style="width:100%;padding:14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:Syne,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-bottom:10px;">Save Profile</button>
           <div id="m-saved" style="display:none;text-align:center;font-size:12px;color:var(--green);padding:8px;">✓ Saved — specialists will reference your data</div>
         </div>
       </div>
@@ -401,13 +443,13 @@ function drawChart(asc){
   ctx.clearRect(0,0,W2,H);
   for(let k=Math.ceil(minK);k<=maxK;k+=2){
     const y=yP(k);
-    ctx.strokeStyle='#1e2832';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W2-pad.r,y);ctx.stroke();
-    ctx.fillStyle='#5a6a7a';ctx.font='8px DM Mono,monospace';ctx.textAlign='right';ctx.fillText(k,pad.l-3,y+3);
+    ctx.strokeStyle='#e8e1d8';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W2-pad.r,y);ctx.stroke();
+    ctx.fillStyle='#8c7d6a';ctx.font='8px DM Mono,monospace';ctx.textAlign='right';ctx.fillText(k,pad.l-3,y+3);
   }
-  ctx.beginPath();ctx.strokeStyle='#00d4b8';ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.beginPath();ctx.strokeStyle='#5c7c6e';ctx.lineWidth=2;ctx.lineJoin='round';
   asc.forEach((d,i)=>{const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
   ctx.stroke();
-  asc.forEach(d=>{const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle=d.phase==='on'?'#00d4b8':'#f5a623';ctx.fill();});
+  asc.forEach(d=>{const x=xP(new Date(d.date+'T00:00:00').getTime()),y=yP(d.kg);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle=d.phase==='on'?'#5c7c6e':'#b87333';ctx.fill();});
 }
 
 function addW(){
@@ -467,11 +509,14 @@ try{
 function switchTab(t){
   document.getElementById('tab-p').classList.toggle('active',t==='panel');
   document.getElementById('tab-w').classList.toggle('active',t==='weight');
+  document.getElementById('tab-d').classList.toggle('active',t==='dose');
   document.getElementById('tab-pr').classList.toggle('active',t==='profile');
   document.getElementById('panelView').classList.toggle('active',t==='panel');
   document.getElementById('weightView').classList.toggle('active',t==='weight');
+  document.getElementById('doseView').classList.toggle('active',t==='dose');
   document.getElementById('profileView').classList.toggle('active',t==='profile');
   if(t==='weight')setTimeout(()=>renderW(),50);
+  if(t==='dose'){checkGCalStatus();renderDose();}
 }
 
 // ── AGENTS ───────────────────────────────
@@ -605,6 +650,254 @@ function tog(id){
 function scr(){const m=document.getElementById('msgs');m.scrollTop=m.scrollHeight;}
 function sl(ms){return new Promise(r=>setTimeout(r,ms));}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── GOOGLE CALENDAR ──────────────────────
+let gcalAuthenticated = false;
+
+async function checkGCalStatus() {
+  try {
+    const res = await fetch('/.netlify/functions/gcal-status');
+    const data = await res.json();
+    gcalAuthenticated = data.authenticated;
+    document.getElementById('gcal-banner').style.display = gcalAuthenticated ? 'none' : 'flex';
+    document.getElementById('gcal-connected').style.display = gcalAuthenticated ? 'flex' : 'none';
+  } catch (e) {
+    document.getElementById('gcal-banner').style.display = 'flex';
+  }
+}
+
+function connectGCal() {
+  const clientId = '202261703639-mk6e9l787e6rorfam81gom87r4ss2etj.apps.googleusercontent.com';
+  const redirectUri = encodeURIComponent('https://peptidedose.netlify.app/.netlify/functions/gcal-callback');
+  const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events');
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`;
+  window.location.href = url;
+}
+
+async function syncToGCal(peptide, dose, syringe, takenAt) {
+  if (!gcalAuthenticated) return;
+  try {
+    await fetch('/.netlify/functions/gcal-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ peptide, dose, syringe, takenAt }),
+    });
+  } catch (e) {
+    console.error('GCal sync error:', e);
+  }
+}
+
+// Check for gcal=success or gcal=error in URL on load
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('gcal') === 'success') {
+  gcalAuthenticated = true;
+  history.replaceState({}, '', '/');
+  switchTab('dose');
+} else if (urlParams.get('gcal') === 'error') {
+  history.replaceState({}, '', '/');
+  alert('Google Calendar connection failed. Please try again.');
+}
+
+// ── DOSE TRACKER ─────────────────────────
+const PEPTIDES = [
+  {
+    id: 'reta',
+    name: 'Retatrutide',
+    dose: '1mg',
+    syringe: '10 units (Terumo U-100)',
+    timing: 'Morning — empty stomach',
+    days: [1, 4],
+    color: '#5c7c6e',
+    emoji: '🟢'
+  },
+  {
+    id: 'bpc',
+    name: 'BPC-157 + TB500',
+    dose: '250mcg + 500mcg',
+    syringe: '7.5 units (Terumo U-100)',
+    timing: 'Evening',
+    days: [1, 2, 3, 4, 5, 6],
+    color: '#7c6e5c',
+    emoji: '🔵'
+  }
+];
+
+function todayKey(){return new Date().toISOString().split('T')[0];}
+function todayDow(){return new Date().getDay();} // 0=Sun
+
+function loadDoseLog(){try{return JSON.parse(localStorage.getItem('doseLog')||'{}');}catch(e){return {};}}
+function saveDoseLog(d){try{localStorage.setItem('doseLog',JSON.stringify(d));}catch(e){}}
+
+function isDueToday(p){return p.days.includes(todayDow());}
+
+function markDose(peptideId, taken){
+  const log = loadDoseLog();
+  const key = todayKey();
+  if(!log[key]) log[key] = {};
+  if(taken){
+    const takenAt = new Date().toISOString();
+    log[key][peptideId] = takenAt;
+    // Sync to Google Calendar
+    const p = PEPTIDES.find(x => x.id === peptideId);
+    if(p) syncToGCal(p.name, p.dose, p.syringe, takenAt);
+  } else {
+    delete log[key][peptideId];
+  }
+  saveDoseLog(log);
+  renderDose();
+}
+
+function calcStreak(peptideId){
+  const log = loadDoseLog();
+  let streak = 0;
+  const d = new Date();
+  // start from yesterday (today may be in progress)
+  d.setDate(d.getDate()-1);
+  for(let i=0;i<60;i++){
+    const dow = d.getDay();
+    const p = PEPTIDES.find(x=>x.id===peptideId);
+    if(p.days.includes(dow)){
+      const key = d.toISOString().split('T')[0];
+      if(log[key]&&log[key][peptideId]) streak++;
+      else break;
+    }
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+function renderDose(){
+  const log = loadDoseLog();
+  const key = todayKey();
+  const todayLog = log[key] || {};
+  const dow = todayDow();
+  const cards = document.getElementById('dose-cards');
+  const stats = document.getElementById('dose-stats');
+  const lbl = document.getElementById('dose-today-lbl');
+
+  // Today label
+  const todayStr = new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'});
+  lbl.textContent = 'TODAY — ' + todayStr;
+
+  // Cards
+  cards.innerHTML = '';
+  PEPTIDES.forEach(p => {
+    const due = p.days.includes(dow);
+    const taken = !!todayLog[p.id];
+    const takenTime = todayLog[p.id] ? new Date(todayLog[p.id]).toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'}) : null;
+
+    const card = document.createElement('div');
+    card.style.cssText = `
+      background:var(--surf);
+      border:1px solid ${taken ? p.color : due ? 'var(--b2)' : 'var(--b1)'};
+      border-radius:10px;
+      padding:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      opacity:${due ? '1' : '0.4'};
+      transition:all 0.2s;
+    `;
+
+    const left = `
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <div style="font-size:13px;font-weight:700;color:${p.color};">${p.name}</div>
+          ${!due ? '<div style="font-size:8px;color:var(--muted);background:var(--b1);padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.1em;">Not today</div>' : ''}
+        </div>
+        <div style="font-family:DM Mono,monospace;font-size:11px;color:var(--muted);margin-bottom:2px;">${p.dose} — ${p.syringe}</div>
+        <div style="font-size:10px;color:var(--muted2);">${p.timing}</div>
+        ${taken && takenTime ? `<div style="font-size:10px;color:var(--green);margin-top:4px;">✓ Taken at ${takenTime}</div>` : ''}
+      </div>
+    `;
+
+    let btn = '';
+    if(due){
+      if(taken){
+        btn = `<button onclick="markDose('${p.id}',false)" style="
+          flex-shrink:0;width:52px;height:52px;border-radius:50%;
+          background:${p.color};border:none;cursor:pointer;
+          font-size:22px;display:flex;align-items:center;justify-content:center;
+          box-shadow:0 0 12px ${p.color}55;
+        ">✅</button>`;
+      } else {
+        btn = `<button onclick="markDose('${p.id}',true)" style="
+          flex-shrink:0;width:52px;height:52px;border-radius:50%;
+          background:var(--b1);border:2px dashed var(--b2);cursor:pointer;
+          font-size:22px;display:flex;align-items:center;justify-content:center;
+          color:var(--muted);transition:all 0.2s;
+        ">💉</button>`;
+      }
+    }
+
+    card.innerHTML = left + btn;
+    cards.appendChild(card);
+  });
+
+  // Stats
+  stats.innerHTML = '';
+  PEPTIDES.forEach(p => {
+    const streak = calcStreak(p.id);
+    const s = document.createElement('div');
+    s.className = 'ws';
+    s.innerHTML = `
+      <div class="ws-v t" style="color:${p.color};font-size:24px;">${streak}</div>
+      <div class="ws-l">${p.name}</div>
+      <div class="ws-s">day streak</div>
+    `;
+    stats.appendChild(s);
+  });
+
+  // History (last 14 days)
+  const hist = document.getElementById('dose-history');
+  hist.innerHTML = '';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px 12px;font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);';
+  hdr.innerHTML = '<span>Date</span><span>Retatrutide</span><span>BPC/TB500</span>';
+  hist.appendChild(hdr);
+
+  let hasHistory = false;
+  const days14 = [];
+  for(let i=0;i<30;i++){
+    const d = new Date();
+    d.setDate(d.getDate()-i);
+    days14.push(d);
+  }
+
+  days14.forEach(d => {
+    const k = d.toISOString().split('T')[0];
+    const dow2 = d.getDay();
+    const dayLog = log[k] || {};
+    const retaDue = PEPTIDES[0].days.includes(dow2);
+    const bpcDue = PEPTIDES[1].days.includes(dow2);
+    if(!retaDue && !bpcDue) return; // skip non-scheduled days
+
+    hasHistory = true;
+    const row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;border-bottom:1px solid var(--b1);align-items:center;';
+
+    const dateStr = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});
+    const isToday = k === todayKey();
+
+    const retaCell = retaDue ? (dayLog['reta'] ? '✅' : (isToday ? '⏳' : '❌')) : '<span style="color:var(--muted2)">—</span>';
+    const bpcCell  = bpcDue  ? (dayLog['bpc']  ? '✅' : (isToday ? '⏳' : '❌')) : '<span style="color:var(--muted2)">—</span>';
+
+    row.innerHTML = `
+      <span style="font-size:11px;color:var(--muted);">${dateStr}${isToday ? ` <span style="color:var(--teal);font-size:8px;">TODAY</span>` : ``}</span>
+      <span style="font-size:16px;">${retaCell}</span>
+      <span style="font-size:16px;">${bpcCell}</span>
+    `;
+    hist.appendChild(row);
+  });
+
+  if(!hasHistory){
+    hist.innerHTML = '<div style="padding:20px;text-align:center;font-size:12px;color:var(--muted);">No doses logged yet — tap 💉 above to mark as taken</div>';
+  }
+}
+
 window.addEventListener('resize',()=>{if(document.getElementById('weightView').classList.contains('active')){const asc=[...W].sort((a,b)=>a.date.localeCompare(b.date));drawChart(asc);}});
 </script>
 </body>
