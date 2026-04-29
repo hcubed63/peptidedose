@@ -677,7 +677,7 @@ function disconnectGCal() {
   document.getElementById('gcal-connected').style.display = 'none';
 }
 
-
+function connectGCal() {
   const clientId = '202261703639-mk6e9l787e6rorfam81gom87r4ss2etj.apps.googleusercontent.com';
   const redirectUri = encodeURIComponent('https://peptidedose.netlify.app/.netlify/functions/gcal-callback');
   const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events');
