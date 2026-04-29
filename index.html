@@ -519,7 +519,7 @@ function switchTab(t){
   document.getElementById('doseView').classList.toggle('active',t==='dose');
   document.getElementById('profileView').classList.toggle('active',t==='profile');
   if(t==='weight')setTimeout(()=>renderW(),50);
-  if(t==='dose'){checkGCalStatus();renderDose();}
+  if(t==='dose'){checkGCalStatus();setTimeout(()=>renderDose(),50);}
 }
 
 // ── AGENTS ───────────────────────────────
@@ -703,7 +703,7 @@ const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('gcal') === 'success') {
   gcalAuthenticated = true;
   history.replaceState({}, '', '/');
-  switchTab('dose');
+  setTimeout(() => { switchTab('dose'); }, 100);
 } else if (urlParams.get('gcal') === 'error') {
   history.replaceState({}, '', '/');
   alert('Google Calendar connection failed. Please try again.');
