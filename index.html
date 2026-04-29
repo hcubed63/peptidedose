@@ -79,7 +79,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
 
 /* MESSAGES */
 .u-msg{display:flex;justify-content:flex-end;}
-.u-bubble{background:var(--teal);color:#000;padding:10px 14px;border-radius:12px 12px 2px 12px;max-width:80%;font-size:13px;font-weight:500;line-height:1.5;word-break:break-word;}
+.u-bubble{background:var(--teal);color:#fff;padding:10px 14px;border-radius:12px 12px 2px 12px;max-width:80%;font-size:13px;font-weight:500;line-height:1.5;word-break:break-word;}
 .panel-lbl{font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
 
 /* CARDS */
@@ -819,7 +819,7 @@ function renderDose(){
           flex-shrink:0;width:52px;height:52px;border-radius:50%;
           background:${p.color};border:none;cursor:pointer;
           font-size:22px;display:flex;align-items:center;justify-content:center;
-          box-shadow:0 0 12px ${p.color}55;
+          color:#fff;box-shadow:0 2px 8px ${p.color}55;
         ">✅</button>`;
       } else {
         btn = `<button onclick="markDose('${p.id}',true)" style="
