@@ -288,9 +288,12 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(
           </div>
 
           <!-- CONNECTED STATUS -->
-          <div id="gcal-connected" style="display:none;background:#fff;border:1px solid var(--b1);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
-            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
-            <div style="font-size:11px;color:var(--muted);">Google Calendar connected — doses will sync automatically</div>
+          <div id="gcal-connected" style="display:none;background:#fff;border:1px solid var(--b1);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>
+              <div style="font-size:11px;color:var(--muted);">Google Calendar connected — doses will sync automatically</div>
+            </div>
+            <button onclick="disconnectGCal()" style="background:none;border:1px solid var(--b2);color:var(--muted);border-radius:4px;padding:4px 8px;font-size:9px;font-family:Syne,sans-serif;cursor:pointer;">Disconnect</button>
           </div>
 
           <!-- TODAY -->
@@ -666,7 +669,15 @@ async function checkGCalStatus() {
   }
 }
 
-function connectGCal() {
+function disconnectGCal() {
+  // Clear the gcal cookie by expiring it
+  document.cookie = 'gcal_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=Lax';
+  gcalAuthenticated = false;
+  document.getElementById('gcal-banner').style.display = 'flex';
+  document.getElementById('gcal-connected').style.display = 'none';
+}
+
+
   const clientId = '202261703639-mk6e9l787e6rorfam81gom87r4ss2etj.apps.googleusercontent.com';
   const redirectUri = encodeURIComponent('https://peptidedose.netlify.app/.netlify/functions/gcal-callback');
   const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events');
