@@ -305,6 +305,26 @@ input:focus, select:focus { border-color: var(--teal); }
     <h1>Peptide <em>Calc</em></h1>
   </div>
 
+  <div class="card" style="margin-bottom:20px;">
+    <div style="font-size:13px;color:var(--muted);line-height:1.75;">
+      When you receive a peptide vial, the powder inside needs to be mixed with <strong style="color:var(--text);">bacteriostatic water (BAC water)</strong> before injecting. Once mixed, you need to know exactly how far to draw the plunger on your syringe to get the right dose — that's what this calculator tells you.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px;">
+      <div style="background:var(--surf2);border:1px solid var(--b1);border-radius:6px;padding:10px 10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;">Vial Size</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.5;">The total mg of peptide in your vial — printed on the label</div>
+      </div>
+      <div style="background:var(--surf2);border:1px solid var(--b1);border-radius:6px;padding:10px 10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;">BAC Water</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.5;">How many mL of water you added to the vial when reconstituting</div>
+      </div>
+      <div style="background:var(--surf2);border:1px solid var(--b1);border-radius:6px;padding:10px 10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;">Your Dose</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.5;">The mcg amount you intend to inject each time</div>
+      </div>
+    </div>
+  </div>
+
   <div class="preset-label">Quick Select</div>
   <div class="pills">
     <button class="pill" onclick="preset('BPC-157',5,2,250)">BPC-157</button>
